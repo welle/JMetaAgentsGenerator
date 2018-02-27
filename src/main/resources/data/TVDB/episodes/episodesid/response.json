@@ -1,0 +1,50 @@
+{
+  "data": {
+    "absoluteNumber": 0,
+    "airedEpisodeNumber": 0,
+    "airedSeason": 0,
+    "airsAfterSeason": 0,
+    "airsBeforeEpisode": 0,
+    "airsBeforeSeason": 0,
+    "director": "string",
+    "directors": [
+      "string"
+    ],
+    "dvdChapter": 0,
+    "dvdDiscid": "string",
+    "dvdEpisodeNumber": 0,
+    "dvdSeason": 0,
+    "episodeName": "string",
+    "filename": "string",
+    "firstAired": "string",
+    "guestStars": [
+      "string"
+    ],
+    "id": 0,
+    "imdbId": "string",
+    "lastUpdated": 0,
+    "lastUpdatedBy": "string",
+    "overview": "string",
+    "productionCode": "string",
+    "seriesId": "string",
+    "showUrl": "string",
+    "siteRating": 0,
+    "siteRatingCount": 0,
+    "thumbAdded": "string",
+    "thumbAuthor": 0,
+    "thumbHeight": "string",
+    "thumbWidth": "string",
+    "writers": [
+      "string"
+    ]
+  },
+  "errors": {
+    "invalidFilters": [
+      "string"
+    ],
+    "invalidLanguage": "string",
+    "invalidQueryParams": [
+      "string"
+    ]
+  }
+}

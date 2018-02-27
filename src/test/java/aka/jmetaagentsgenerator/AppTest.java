@@ -1,4 +1,4 @@
-package aka.jmetaagentsgenerator.JMetaAgentsGenerator;
+package aka.jmetaagentsgenerator;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

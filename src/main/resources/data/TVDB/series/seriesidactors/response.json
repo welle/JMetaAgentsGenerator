@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "image": "string",
+      "imageAdded": "string",
+      "imageAuthor": 0,
+      "lastUpdated": "string",
+      "name": "string",
+      "role": "string",
+      "seriesId": 0,
+      "sortOrder": 0
+    }
+  ],
+  "errors": {
+    "invalidFilters": [
+      "string"
+    ],
+    "invalidLanguage": "string",
+    "invalidQueryParams": [
+      "string"
+    ]
+  }
+}

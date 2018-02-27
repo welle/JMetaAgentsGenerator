@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+	<Url>https://api.thetvdb.com/login</Url>
+	<Method>POST</Method>
+	<Parameters>
+		<Parameter type="JSON"></Parameter>
+	</Parameters>
+</Query>

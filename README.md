@@ -4,6 +4,26 @@
 
 JMetaAgentsGenerator will create java pojo from JSON string from TVDB, TMDB, etc
 
+### Dependencies for the generated test units:
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+<dependency>
+	<groupId>org.mockito</groupId>
+	<artifactId>mockito-all</artifactId>
+	<version>1.10.19</version>
+	<scope>test</scope>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.powermock/powermock-mockito-release-full -->
+<dependency>
+	<groupId>org.powermock</groupId>
+	<artifactId>powermock-mockito-release-full</artifactId>
+	<version>1.6.4</version>
+	<type>pom</type>
+	<scope>test</scope>
+</dependency>
+```
+
 ### Version
 
 Go to [my maven repository](https://github.com/welle/maven-repository) to get the latest version.

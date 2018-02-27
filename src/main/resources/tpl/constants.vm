@@ -1,0 +1,29 @@
+package ${package};
+
+/**
+ * The super class for all exceptions in ${comp.Name}.
+ */
+public class ${comp.Name}Exception extends Exception {
+
+    private static final long serialVersionUID = ${comp.SerialUID};
+
+    /**
+     * Create exception with text/message.
+     *
+     * @param text text/message
+     */
+    public ${comp.Name}Exception(final String text) {
+        super(text);
+    }
+
+    /**
+     * Create exception with text/message and the cause.
+     *
+     * @param text text/message
+     * @param cause the Throwable that caused the exception
+     */
+    public ${comp.Name}Exception(final String text, final Throwable cause) {
+        super(text, cause);
+    }
+
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+	<Url>https://api.thetvdb.com/episodes/</Url>
+	<Method>GET</Method>
+	<Parameters>
+		<Parameter type="PATH">id</Parameter>
+		<Parameter type="HEADER">Accept_language</Parameter>
+	</Parameters>
+</Query>
