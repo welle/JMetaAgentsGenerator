@@ -1,4 +1,4 @@
-package {$package};
+package ${subpackage};
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -15,52 +15,44 @@ import aka.jhttprequest.main.common.HTTPResponseBufferedImage;
 import aka.jhttprequest.main.common.HTTPResponseString;
 import aka.jhttprequest.main.constants.MimeTypeConstants;
 import aka.jhttprequest.main.exceptions.HTTPException;
-import aka.jmetaagents.main.AbstractAgent;
-import aka.jmetaagents.main.jtvdb.constants.JTVDBConstants;
-import aka.jmetaagents.main.jtvdb.constants.KEY_TYPE;
-import aka.jmetaagents.main.jtvdb.exceptions.JTVDBException;
-import aka.jmetaagents.main.jtvdb.login.JTVDBLogin;
-import aka.jmetaagents.main.jtvdb.login.JTVDBLoginJacksonMapper;
-import aka.jmetaagents.main.jtvdb.login.JTVDBResponseLogin;
-import aka.jmetaagents.main.jtvdb.login.JTVDBResponseLoginJacksonMapper;
-import aka.jmetaagents.main.jtvdb.pojo.jtvshow.JTVShow;
-import aka.jmetaagents.main.jtvdb.pojo.jtvshow.JTVShowJacksonMapper;
-import aka.jmetaagents.main.jtvdb.pojo.jtvshowactor.JTVShowActor;
-import aka.jmetaagents.main.jtvdb.pojo.jtvshowactor.JTVShowActorJacksonMapper;
-import aka.jmetaagents.main.jtvdb.pojo.jtvshowepisode.JTVShowEpisode;
-import aka.jmetaagents.main.jtvdb.pojo.jtvshowepisode.JTVShowEpisodeJacksonMapper;
-import aka.jmetaagents.main.jtvdb.pojo.jtvshowimage.JTVShowImage;
-import aka.jmetaagents.main.jtvdb.pojo.jtvshowimage.JTVShowImageJacksonMapper;
-import aka.jmetaagents.main.jtvdb.pojo.jtvshowsearch.JTVShowSearch;
-import aka.jmetaagents.main.jtvdb.pojo.jtvshowsearch.JTVShowSearchJacksonMapper;
-import aka.jmetaagents.utils.TextUtils;
+import ${package}.AbstractAgent;
+import ${subpackage}.exceptions.JtvdbException;
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}Question;
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}QuestionJacksonMapper;
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}Response;
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}ResponseJacksonMapper;
+#foreach( $query in ${queryList.Queries} )
+#if( ${query.ExistQuestion} )
+import ${package}.${query.Package}.${query.ObjectName}Question;
+import ${package}.${query.Package}.${query.ObjectName}QuestionJacksonMapper;
+#end
+#if( ${query.ExistResponse} )
+import ${package}.${query.Package}.${query.ObjectName}Response;
+import ${package}.${query.Package}.${query.ObjectName}ResponseJacksonMapper;
+#end
+#end
 
 /**
- * JTVDB.
- *
- * @author Charlotte
+ * Generated ${comp.Name}.
  */
-public final class JTVDB extends AbstractAgent {
+public final class ${comp.Name} extends AbstractAgent {
 
-    @NonNull
-    private final HTTPManager httpManager;
+    private @NonNull final HTTPManager httpManager;
     private @NonNull final String token;
 
     /**
      * Constructor.
      *
-     * @param apikey API key
-     * @param userName user name
-     * @param userkey user key
-     * @throws JTVDBException
+     * @param ${display.uncapitalize($loginQuery.ObjectName)}Question the object required to login in the API.
+     * @throws JtvdbException
      */
-    public JTVDB(@NonNull final String apikey, @NonNull final String userName, @NonNull final String userkey) throws JTVDBException {
+    public ${comp.Name}(@NonNull final ${loginQuery.ObjectName}Question ${display.uncapitalize($loginQuery.ObjectName)}Question) throws JtvdbException {
         super();
 
         this.httpManager = new HTTPManager();
-        final String currentToken = getAPIKey(apikey, userName, userkey);
+        final String currentToken = getAPIKey(${display.uncapitalize($loginQuery.ObjectName)}Question);
         if (currentToken == null) {
-            throw new JTVDBException("Could not retrieve token.");
+            throw new JtvdbException("Could not retrieve token.");
         }
         this.token = currentToken;
     }
@@ -70,271 +62,99 @@ public final class JTVDB extends AbstractAgent {
      *
      * @return token
      */
+    @NonNull
     public String getToken() {
         return this.token;
     }
 
     @Nullable
-    private String getAPIKey(@NonNull final String apikey, @NonNull final String userName, @NonNull final String userkey) throws JTVDBException {
+    private String getAPIKey(@NonNull final ${loginQuery.ObjectName}Question ${display.uncapitalize($loginQuery.ObjectName)}Question) throws JtvdbException {
         String result = null;
 
         try {
-            final String url = TextUtils.pack(JTVDBConstants.LOGIN_URL);
-            final JTVDBLogin jtvdbLogin = new JTVDBLogin(apikey, userName, userkey);
-            final String json = JTVDBLoginJacksonMapper.writeValue(jtvdbLogin);
+            final String url = "${loginQuery.Query.Url}";
+        #if(  ${loginQuery.Query.Method.Value} == "" )
+			final HTTPRequestData httpRequestData = new HTTPRequestData(url);
+		#else
+            final String json = ${loginQuery.ObjectName}QuestionJacksonMapper.writeValue(${display.uncapitalize($loginQuery.ObjectName)}Question);
             assert json != null;
-
             final HTTPRequestData httpRequestData = new HTTPRequestData(url, new StringEntity(json));
-            httpRequestData.addHeader("Accept", MimeTypeConstants.APPLICATION_JSON);
-            httpRequestData.addHeader("Content-Type", MimeTypeConstants.APPLICATION_JSON);
+        #end    
+        #foreach( $header in ${loginQuery.Query.Parameters.Headers.parameter} )
+            httpRequestData.addHeader("${header.name}", "${header.value}");
+		#end      
 
-            final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendPostRequest(httpRequestData);
+        #if( ${loginQuery.Query.Method.Type} == "GET" )
+            final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendGetRequest(httpRequestData);
+        #elseif( ${loginQuery.Query.Method.Type} == "POST" )  
+        	final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendPostRequest(httpRequestData);  
+		#end
             final String jsonString = response.getContent();
 
             @Nullable
-            final JTVDBResponseLogin jtvdbResponseLogin = readValue(JTVDBResponseLoginJacksonMapper.class, jsonString);
-            if (jtvdbResponseLogin != null) {
-                result = jtvdbResponseLogin.getToken();
+            final ${loginQuery.ObjectName}Response ${display.uncapitalize($loginQuery.ObjectName)}Response = readValue(${loginQuery.ObjectName}ResponseJacksonMapper.class, jsonString);
+            if (${display.uncapitalize($loginQuery.ObjectName)}Response != null) {
+                result = ${display.uncapitalize($loginQuery.ObjectName)}Response.getToken();
             }
         } catch (final HTTPException | IOException e) {
-            throw new JTVDBException(e.getMessage(), e.getCause());
+            throw new JtvdbException(e.getMessage(), e.getCause());
         }
 
         return result;
     }
 
+#foreach( $query in ${queryList.Queries} )    
     /**
-     * Get TV show details.
+     * Get ${query.ObjectName}.
      *
-     * @param id code id of the TV show
-     * @param locale Locale
-     * @return object containing result
-     * @throws JTVDBException
-     * @see JTVShow
+     #if( ${query.ExistQuestion} )
+     * @param ${display.uncapitalize($query.ObjectName)}Question the query
+     #end
+     #if( ${query.ExistResponse} )
+     * @return ${query.ObjectName}Response
+     #end
+     * @throws JtvdbException
      */
     @Nullable
-    public final JTVShow getTVShow(@NonNull final String id, @Nullable final Locale locale) throws JTVDBException {
-        JTVShow result = null;
-
+    public final#if( ${query.ExistResponse} ) ${query.ObjectName}Response get${query.ObjectName}#else void  ${display.uncapitalize($query.ObjectName)}#end(#if( ${query.ExistQuestion} )@NonNull ${query.ObjectName}Question ${display.uncapitalize($query.ObjectName)}Question#end) throws JtvdbException {
+        ${query.ObjectName}Response result = null;
+        
         try {
-            final String url = TextUtils.pack(JTVDBConstants.TV_SHOW_URL, id);
+        #if( ${query.Query.Parameters.Path.parameter.size()} == 0 )
+            final String url = "${query.Query.Url}";
+        #else
+            String url = "${query.Query.Url}";
+        #end
+        #parse("tpl/params/urlpathparam.vm")
 
             final HTTPRequestData httpRequestData = new HTTPRequestData(url);
-            httpRequestData.addHeader("Accept", MimeTypeConstants.APPLICATION_JSON);
-            httpRequestData.addHeader("Accept-Language", getLanguage(locale));
+		#parse("tpl/params/headerparam.vm")
             httpRequestData.addHeader("Authorization", "Bearer " + this.token);
 
+		#parse("tpl/params/queryurlparam.vm")
+		#if( ${query.Query.Method.Type} == "GET" )
             final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendGetRequest(httpRequestData);
+        #elseif( ${query.Query.Method.Type} == "POST" )  
+            final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendPostRequest(httpRequestData);  
+		#end
             final String jsonString = response.getContent();
-            result = readValue(JTVShowJacksonMapper.class, jsonString);
+            result = readValue(${query.ObjectName}ResponseJacksonMapper.class, jsonString);
         } catch (final HTTPException | MalformedURLException e) {
-            throw new JTVDBException(e.getMessage(), e.getCause());
+            throw new JtvdbException(e.getMessage(), e.getCause());
         }
-
         return result;
     }
 
-    /**
-     * Get TV show episode details.
-     *
-     * @param id code id of the TV show episode
-     * @param locale Locale
-     * @return object containing result
-     * @throws JTVDBException
-     * @see JTVShowEpisode
-     */
-    @Nullable
-    public final JTVShowEpisode getTVShowEpisode(@NonNull final String id, @Nullable final Locale locale) throws JTVDBException {
-        JTVShowEpisode result = null;
-
-        try {
-            final String url = TextUtils.pack(JTVDBConstants.TV_SHOW_EPISODE_URL, id);
-
-            final HTTPRequestData httpRequestData = new HTTPRequestData(url);
-            httpRequestData.addHeader("Accept", MimeTypeConstants.APPLICATION_JSON);
-            httpRequestData.addHeader("Accept-Language", getLanguage(locale));
-            httpRequestData.addHeader("Authorization", "Bearer " + this.token);
-
-            final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendGetRequest(httpRequestData);
-            final String jsonString = response.getContent();
-            result = readValue(JTVShowEpisodeJacksonMapper.class, jsonString);
-        } catch (final HTTPException | MalformedURLException e) {
-            throw new JTVDBException(e.getMessage(), e.getCause());
-        }
-
-        return result;
-    }
-
-    /**
-     * Search TV shows.
-     *
-     * @param query The query param is your search text
-     * @param locale (optional)
-     * @return TV shows search object containing result
-     * @throws JTVDBException
-     * @see JTVShowSearch
-     */
-    @Nullable
-    public final JTVShowSearch searchTVShows(@NonNull final String query, @Nullable final Locale locale) throws JTVDBException {
-        JTVShowSearch result = null;
-
-        try {
-            final HTTPRequestData httpRequestData = new HTTPRequestData(JTVDBConstants.SEARCH_TV_SHOWS_URL);
-            httpRequestData.addHeader("Accept", MimeTypeConstants.APPLICATION_JSON);
-            httpRequestData.addHeader("Accept-Language", getLanguage(locale));
-            httpRequestData.addHeader("Authorization", "Bearer " + this.token);
-
-            httpRequestData.addParams(JTVDBConstants.NAME, query);
-
-            final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendGetRequest(httpRequestData);
-            final String jsonString = response.getContent();
-            result = readValue(JTVShowSearchJacksonMapper.class, jsonString);
-        } catch (final HTTPException | MalformedURLException e) {
-            throw new JTVDBException(e.getMessage(), e.getCause());
-        }
-
-        return result;
-    }
-
-    /**
-     * Search TV show details by IMDB id.
-     *
-     * @param id IMDB id of the TV show
-     * @param locale (optional).
-     * @return object containing result
-     * @throws JTVDBException
-     * @see JTVShowSearch
-     */
-    @Nullable
-    public final JTVShowSearch searchTVShowByIMDBid(@NonNull final String id, @Nullable final Locale locale) throws JTVDBException {
-        JTVShowSearch result = null;
-
-        try {
-            final HTTPRequestData httpRequestData = new HTTPRequestData(JTVDBConstants.SEARCH_TV_SHOWS_URL);
-            httpRequestData.addHeader("Accept", MimeTypeConstants.APPLICATION_JSON);
-            httpRequestData.addHeader("Accept-Language", getLanguage(locale));
-            httpRequestData.addHeader("Authorization", "Bearer " + this.token);
-
-            httpRequestData.addParams(JTVDBConstants.IMDB_ID, id);
-
-            final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendGetRequest(httpRequestData);
-            final String jsonString = response.getContent();
-            result = readValue(JTVShowSearchJacksonMapper.class, jsonString);
-        } catch (final HTTPException | MalformedURLException e) {
-            throw new JTVDBException(e.getMessage(), e.getCause());
-        }
-
-        return result;
-    }
-
-    /**
-     * Get TV show actors.
-     *
-     * @param id code id of the TV show
-     * @param season season number (0 for special)
-     * @param locale
-     * @return object containing result
-     * @throws JTVDBException
-     * @see JTVShowActor
-     */
-    @Nullable
-    public final JTVShowSearch getTVShowSeason(@NonNull final String id, @NonNull final String season, @Nullable final Locale locale) throws JTVDBException {
-        JTVShowSearch result = null;
-
-        try {
-            final String url = TextUtils.pack(JTVDBConstants.TV_SHOW_URL, id, "/episodes/query?");
-
-            final HTTPRequestData httpRequestData = new HTTPRequestData(url);
-            httpRequestData.addHeader("Accept", MimeTypeConstants.APPLICATION_JSON);
-            httpRequestData.addHeader("Accept-Language", getLanguage(locale));
-            httpRequestData.addHeader("Authorization", "Bearer " + this.token);
-
-            httpRequestData.addParams("airedSeason", season);
-
-            final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendGetRequest(httpRequestData);
-            final String jsonString = response.getContent();
-            result = readValue(JTVShowSearchJacksonMapper.class, jsonString);
-        } catch (final HTTPException | MalformedURLException e) {
-            throw new JTVDBException(e.getMessage(), e.getCause());
-        }
-
-        return result;
-    }
-
-    /**
-     * Get TV show actors.
-     *
-     * @param id code id of the TV show
-     * @return object containing result
-     * @throws JTVDBException
-     * @see JTVShowActor
-     */
-    @Nullable
-    public final JTVShowActor getTVShowActors(@NonNull final String id) throws JTVDBException {
-        JTVShowActor result = null;
-
-        try {
-            final String url = TextUtils.pack(JTVDBConstants.TV_SHOW_URL, id, "/actors");
-
-            final HTTPRequestData httpRequestData = new HTTPRequestData(url);
-            httpRequestData.addHeader("Accept", MimeTypeConstants.APPLICATION_JSON);
-            httpRequestData.addHeader("Authorization", "Bearer " + this.token);
-
-            final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendGetRequest(httpRequestData);
-            final String jsonString = response.getContent();
-            result = readValue(JTVShowActorJacksonMapper.class, jsonString);
-        } catch (final HTTPException | MalformedURLException e) {
-            throw new JTVDBException(e.getMessage(), e.getCause());
-        }
-
-        return result;
-    }
-
-    /**
-     * Get TV show images.
-     *
-     * @param id code id of the TV show
-     * @param keyType type of image
-     * @param locale
-     * @return object containing result
-     * @throws JTVDBException
-     * @see JTVShowImage
-     * @see KEY_TYPE
-     */
-    @Nullable
-    public final JTVShowImage getTVShowImages(@NonNull final String id, @NonNull final KEY_TYPE keyType, @Nullable final Locale locale) throws JTVDBException {
-        JTVShowImage result = null;
-
-        try {
-            final String url = TextUtils.pack(JTVDBConstants.TV_SHOW_URL, id, "/images/query?");
-
-            final HTTPRequestData httpRequestData = new HTTPRequestData(url);
-            httpRequestData.addHeader("Accept", MimeTypeConstants.APPLICATION_JSON);
-            httpRequestData.addHeader("Accept-Language", getLanguage(locale));
-            httpRequestData.addHeader("Authorization", "Bearer " + this.token);
-
-            httpRequestData.addParams("keyType", keyType.getValue());
-
-            final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendGetRequest(httpRequestData);
-            final String jsonString = response.getContent();
-            result = readValue(JTVShowImageJacksonMapper.class, jsonString);
-        } catch (final HTTPException | MalformedURLException e) {
-            throw new JTVDBException(e.getMessage(), e.getCause());
-        }
-
-        return result;
-    }
-
+#end
     /**
      * This method does not matter if the URL is absolute or relative.
      *
      * @param url
      * @return image from the URL
-     * @throws JTVDBException
-     * @see BufferedImage
+     * @throws JtvdbException
      */
     @Nullable
-    public final BufferedImage getImage(@NonNull final String url) throws JTVDBException {
+    public final BufferedImage getImage(@NonNull final String url) throws JtvdbException {
         BufferedImage result = null;
 
         try {
@@ -343,7 +163,7 @@ public final class JTVDB extends AbstractAgent {
                 httpRequestData = new HTTPRequestData(url);
             } else {
                 final StringBuilder sb = new StringBuilder();
-                sb.append(JTVDBConstants.IMAGE_URL);
+                sb.append("http://thetvdb.com/banners/");
                 sb.append(url);
                 final String newURL = sb.toString();
                 httpRequestData = new HTTPRequestData(newURL);
@@ -352,9 +172,10 @@ public final class JTVDB extends AbstractAgent {
             final HTTPResponseBufferedImage response = (HTTPResponseBufferedImage) this.httpManager.sendGetRequest(httpRequestData);
             result = response.getContent();
         } catch (final HTTPException | MalformedURLException e) {
-            throw new JTVDBException(e.getMessage(), e.getCause());
+            throw new JtvdbException(e.getMessage(), e.getCause());
         }
 
         return result;
     }
+
 }

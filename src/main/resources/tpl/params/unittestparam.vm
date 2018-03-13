@@ -1,0 +1,3 @@
+#foreach ($mapEntry in ${query.ObjectQuestionParam.entrySet()})
+        final ${mapEntry.value.ParamType} ${display.uncapitalize($mapEntry.value.ParamName)} = null;
+#end

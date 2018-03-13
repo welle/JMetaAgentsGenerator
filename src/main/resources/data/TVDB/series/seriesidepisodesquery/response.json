@@ -1,3 +1,31 @@
 {
-  "token": "string"
+  "data": [
+    {
+      "absoluteNumber": 0,
+      "airedEpisodeNumber": 0,
+      "airedSeason": 0,
+      "dvdEpisodeNumber": 0,
+      "dvdSeason": 0,
+      "episodeName": "string",
+      "firstAired": "string",
+      "id": 0,
+      "lastUpdated": 0,
+      "overview": "string"
+    }
+  ],
+  "errors": {
+    "invalidFilters": [
+      "string"
+    ],
+    "invalidLanguage": "string",
+    "invalidQueryParams": [
+      "string"
+    ]
+  },
+  "links": {
+    "first": 0,
+    "last": 0,
+    "next": 0,
+    "previous": 0
+  }
 }

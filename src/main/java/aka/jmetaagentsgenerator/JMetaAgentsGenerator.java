@@ -1,10 +1,7 @@
 package aka.jmetaagentsgenerator;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -13,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
@@ -28,13 +24,12 @@ import aka.convertor.json.JsonConvertor;
 import aka.convertor.json.constants.AnnotationType;
 import aka.convertor.json.constants.Generator;
 import aka.convertor.json.helpers.StringUtilities;
+import aka.jmetaagentsgenerator.velocity.Root;
 
 /**
  * @author charlottew
  */
-public class JMetaAgentsGenerator {
-
-    private static final Logger LOGGER = Logger.getLogger(JMetaAgentsGenerator.class.getName());
+public class JMetaAgentsGenerator extends AbstractGenerator {
 
     private @NonNull final String destinationPath;
     private @NonNull final String destinationTestPath;
@@ -48,6 +43,7 @@ public class JMetaAgentsGenerator {
      * @param destinationPath where to write files.
      */
     public JMetaAgentsGenerator(@NonNull final String basePackage, @NonNull final String destinationPath, @NonNull final String destinationTestPath) {
+        super(basePackage);
         this.destinationPath = destinationPath;
         this.destinationTestPath = destinationTestPath;
         this.basePackage = basePackage;
@@ -60,28 +56,34 @@ public class JMetaAgentsGenerator {
     public void build() {
         // Get all file path in resources
         final Map<@NonNull APIInformation, List<BuildInformation>> buildInformationByDirectoryMap = getSubPackageByDirectoryMap();
-        // 1) generate pojo from json
         for (final Entry<@NonNull APIInformation, List<BuildInformation>> entry : buildInformationByDirectoryMap.entrySet()) {
             generateForAPI(entry.getKey(), entry.getValue());
+        }
+
+        for (final Entry<@NonNull APIInformation, List<BuildInformation>> entry : buildInformationByDirectoryMap.entrySet()) {
+            final APIInformation apiInformation = entry.getKey();
+            final List<BuildInformation> buildInformationsList = entry.getValue();
+            if ("tvdb".equals(apiInformation.apiName)) {
+                final JTVDBgenerator bgenerator = new JTVDBgenerator(this.destinationPath, this.destinationTestPath, this.basePackage, apiInformation, buildInformationsList);
+                bgenerator.buildMainTVDB(apiInformation.apiName);
+                bgenerator.buildUnitTestTVDB(apiInformation.apiName);
+            }
         }
     }
 
     private void generateForAPI(@NonNull final APIInformation apiInformation, final List<BuildInformation> buildInformationsList) {
         // generate pojo from json OK
         for (final BuildInformation buildInformation : buildInformationsList) {
-            System.err.println("[JMetaAgentsGenerator] build - " + apiInformation);
-//            try {
-//            generatePojoFromJson(buildInformation);
-//            } catch (final IOException e) {
-//                LOGGER.logp(Level.SEVERE, "JMetaAgentsGenerator", "build", e.getMessage(), e);
-//            }
+            try {
+                generatePojoFromJson(buildInformation);
+            } catch (final IOException e) {
+                LOGGER.logp(Level.SEVERE, "JMetaAgentsGenerator", "build", e.getMessage(), e);
+            }
         }
         // generate exception file OK
-//        generateExceptionFile(apiInformation);
+        generateExceptionFile(apiInformation);
         // generate abstract OK
-//        generateAbstract();
-        // generate main
-
+        generateAbstract();
         // generate constant file ?
     }
 
@@ -125,19 +127,6 @@ public class JMetaAgentsGenerator {
         }
     }
 
-    private void callVelocity(final String fileNameFullPath, final String templateName, @NonNull final VelocityContext velocityContext) {
-        try {
-            final OutputStream os = new FileOutputStream(fileNameFullPath);
-            final OutputStreamWriter osw = new OutputStreamWriter(os);
-
-            this.velocityEngine.mergeTemplate(templateName, "ISO-8859-1", velocityContext, osw);
-            osw.flush();
-            osw.close();
-        } catch (final IOException e) {
-            LOGGER.logp(Level.SEVERE, "JMetaAgentsGenerator", "callVelocity", e.getMessage(), e);
-        }
-    }
-
     private void generatePojoFromJson(@NonNull final BuildInformation buildInformation) throws IOException {
         if (buildInformation.questionJSON != null || buildInformation.responseJSON != null) {
             final String fullPackage = this.basePackage + "." + buildInformation.packageName;
@@ -168,6 +157,7 @@ public class JMetaAgentsGenerator {
         final Path directoryPath = directory.toPath();
         try {
             if (directory.isDirectory()) {
+                final Map<String, APIInformation> mapInformation = new HashMap<>();
                 final List<@NonNull File> files = (List<@NonNull File>) FileUtils.listFilesAndDirs(directory, DirectoryFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
                 for (final @NonNull File currentDirectory : files) {
                     final String[] extensions = { "json", "xml" };
@@ -196,8 +186,12 @@ public class JMetaAgentsGenerator {
                             }
                         }
 
-                        final APIInformation information = new APIInformation();
-                        information.apiName = apiName;
+                        APIInformation information = mapInformation.get(apiName);
+                        if (information == null) {
+                            information = new APIInformation();
+                            information.apiName = apiName;
+                            mapInformation.put(apiName, information);
+                        }
                         List<BuildInformation> list = result.get(information);
                         if (list == null) {
                             list = new ArrayList<>();
@@ -214,7 +208,7 @@ public class JMetaAgentsGenerator {
         return result;
     }
 
-    private class APIInformation {
+    public class APIInformation {
         public String apiName;
         public List<BuildInformation> listOf;
 
@@ -270,7 +264,7 @@ public class JMetaAgentsGenerator {
         }
     }
 
-    private class BuildInformation {
+    public class BuildInformation {
         public String packageName;
         public String subDirectoryPath;
         public String baseJavaClassName;

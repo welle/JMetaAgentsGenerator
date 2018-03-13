@@ -1,0 +1,17 @@
+#foreach( $pathParameter in ${query.Query.Parameters.UrlQuery.parameter} )
+#foreach ($mapEntry in ${query.ObjectQuestionParam.entrySet()})
+	#if(${pathParameter.Value} == "")
+		#if(${pathParameter.Name} == ${mapEntry.key})
+			final ${mapEntry.value.ParamType} ${display.uncapitalize($mapEntry.value.ParamName)} = ${display.uncapitalize($query.ObjectName)}Question.get${display.capitalize($mapEntry.value.ParamName)}();
+			if (${display.uncapitalize($mapEntry.value.ParamName)} != null) {
+                httpRequestData.addParams("${mapEntry.key}", ${display.uncapitalize($mapEntry.value.ParamName)});
+			}
+		#end
+	#else
+		#if(${pathParameter.Value} == ${mapEntry.key})
+            httpRequestData.addParams("${mapEntry.key}", ${pathParameter.Value});
+		#end
+	#end
+#end
+#end
+

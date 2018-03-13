@@ -24,6 +24,10 @@ JMetaAgentsGenerator will create java pojo from JSON string from TVDB, TMDB, etc
 </dependency>
 ```
 
+### How to use it ###
+
+See examples in unit tests.
+
 ### Version
 
 Go to [my maven repository](https://github.com/welle/maven-repository) to get the latest version.

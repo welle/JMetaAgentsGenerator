@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+	<Url>https://api.thetvdb.com/series/{id}/episodes/query</Url>
+	<Method type="GET"></Method>
+	<Parameters>
+		<Headers>
+			<Parameter name="Accept-Language" type="JSON"></Parameter>
+		</Headers>
+		<Path>
+			<Parameter name="id" type="JSON"></Parameter>
+		</Path>
+		<UrlQuery>
+			<Parameter name="absoluteNumber" type="JSON"></Parameter>
+			<Parameter name="airedSeason" type="JSON"></Parameter>
+			<Parameter name="airedEpisode" type="JSON"></Parameter>
+			<Parameter name="dvdSeason" type="JSON"></Parameter>
+			<Parameter name="dvdEpisode" type="JSON"></Parameter>
+			<Parameter name="imdbId" type="JSON"></Parameter>
+			<Parameter name="page" type="JSON"></Parameter>
+		</UrlQuery>
+	</Parameters>
+	<Response>response.json</Response>
+</Query>

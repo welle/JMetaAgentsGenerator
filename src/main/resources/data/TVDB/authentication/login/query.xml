@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
 	<Url>https://api.thetvdb.com/login</Url>
-	<Method>POST</Method>
+	<Method type="POST">question.json</Method>
 	<Parameters>
-		<Parameter type="JSON"></Parameter>
+		<Headers>
+			<Parameter name="Content-Type" type="PARAM">application/json</Parameter>
+			<Parameter name="Accept" type="PARAM">application/json</Parameter>
+		</Headers>
+		<Path>
+		</Path>
+		<UrlQuery>
+		</UrlQuery>
 	</Parameters>
+	<Response>response.json</Response>
 </Query>

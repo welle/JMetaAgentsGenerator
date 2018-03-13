@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Method>GET</Method>
+	<Url>https://api.thetvdb.com/refresh_token</Url>
+	<Method type="GET"></Method>
+	<Parameters>
+		<Headers>
+		</Headers>
+		<Path>
+		</Path>
+		<UrlQuery>
+		</UrlQuery>
+	</Parameters>
+	<Response>response.json</Response>
 </Query>

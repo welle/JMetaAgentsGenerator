@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
 	<Url>http://www.example.com</Url>
-	<Method>POST|GET</Method>
+	<Method type="POST|GET">question.json</Method>
 	<Parameters>
-		<Parameter type="HEADER|PATH|QUERY|JSON">nameofparameter</Parameter>
+		<Headers>
+			<Parameter name="nameofparameter" type="PARAM|JSON">optionalvalue</Parameter>
+			<Parameter name="nameofparameter" type="PARAM|JSON">optionalvalue</Parameter>
+		</Headers>
+		<Path>
+			<Parameter name="nameofparameter" type="PARAM|JSON">optionalvalue</Parameter>
+			<Parameter name="nameofparameter" type="PARAM|JSON">optionalvalue</Parameter>
+		</Path>
+		<UrlQuery>
+			<Parameter name="nameofparameter" type="PARAM|JSON">optionalvalue</Parameter>
+			<Parameter name="nameofparameter" type="PARAM|JSON">optionalvalue</Parameter>
+		</UrlQuery>
 	</Parameters>
+	<Response>response.json</Response>
 </Query>

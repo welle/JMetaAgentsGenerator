@@ -1,5 +1,11 @@
 {
-  "apikey": "string",
-  "userkey": "string",
-  "username": "string"
+  "id": 1,
+  "Accept-Language": "string",
+  "absoluteNumber": "string",
+  "airedSeason": "string",
+  "airedEpisode": "string",
+  "dvdSeason": "string",
+  "dvdEpisode": "string",
+  "imdbId": "string",
+  "page": "string"
 }

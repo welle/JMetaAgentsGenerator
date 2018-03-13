@@ -1,9 +1,9 @@
-package aka.jmetaagentsgenerator;
+package aka.jmetaagentsgenerator.velocity;
 
 public class Root {
 
-    public String name;
-    public String serialUID;
+    private String name;
+    private String serialUID;
 
     /**
      * @return the name

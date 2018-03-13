@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/episodes/</Url>
-	<Method>GET</Method>
+	<Url>https://api.thetvdb.com/episodes/{id}</Url>
+	<Method type="GET"></Method>
 	<Parameters>
-		<Parameter type="PATH">id</Parameter>
-		<Parameter type="HEADER">Accept_language</Parameter>
+		<Headers>
+			<Parameter name="Accept-Language" type="JSON"></Parameter>
+		</Headers>
+		<Path>
+			<Parameter name="id" type="JSON"></Parameter>
+		</Path>
+		<UrlQuery>
+		</UrlQuery>
 	</Parameters>
+	<Response>response.json</Response>
 </Query>

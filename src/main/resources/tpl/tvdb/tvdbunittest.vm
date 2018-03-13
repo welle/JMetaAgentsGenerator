@@ -1,0 +1,101 @@
+package ${subpackage};
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Locale;
+
+import org.apache.http.entity.StringEntity;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
+import aka.jhttprequest.main.HTTPManager;
+import aka.jhttprequest.main.common.HTTPRequestData;
+import aka.jhttprequest.main.common.HTTPResponseBufferedImage;
+import aka.jhttprequest.main.common.HTTPResponseString;
+import aka.jhttprequest.main.constants.MimeTypeConstants;
+import aka.jhttprequest.main.exceptions.HTTPException;
+import ${package}.AbstractAgent;
+import ${subpackage}.exceptions.JtvdbException;
+import ${subpackage}.${comp.Name};
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}Question;
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}QuestionJacksonMapper;
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}Response;
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}ResponseJacksonMapper;
+#foreach( $query in ${queryList.Queries} )
+#if( ${query.ExistQuestion} )
+import ${package}.${query.Package}.${query.ObjectName}Question;
+import ${package}.${query.Package}.${query.ObjectName}QuestionJacksonMapper;
+#end
+#if( ${query.ExistResponse} )
+import ${package}.${query.Package}.${query.ObjectName}Response;
+import ${package}.${query.Package}.${query.ObjectName}ResponseJacksonMapper;
+#end
+#end
+
+/**
+ * Generated ${comp.Name} Tests unit.
+ */
+public final class ${comp.Name}_Test {
+
+    // TO BE FILLED
+    private @NonNull String apiKey = "";
+    // TO BE FILLED
+    private @NonNull String userKey = "";
+    // TO BE FILLED
+    private @NonNull String userName = "";
+
+#foreach( $query in ${queryList.Queries} )    
+    /**
+     * Test get${query.ObjectName} method.
+     *
+     * @throws JtvdbException
+     */
+    @org.junit.Test 
+    public void get${query.ObjectName}_Test() throws JtvdbException {
+        // arrange : set up the test
+        final ${loginQuery.ObjectName}Question ${display.uncapitalize($loginQuery.ObjectName)}Question = new ${loginQuery.ObjectName}Question(this.apiKey, this.userKey, this.userName);
+        final ${comp.Name} ${display.uncapitalize($comp.Name)} = new ${comp.Name}(${display.uncapitalize($loginQuery.ObjectName)}Question);
+        
+        // act : run the test
+        #if( ${query.ExistQuestion} )
+        #parse("tpl/params/unittestparam.vm")
+        final ${query.ObjectName}Question ${display.uncapitalize($comp.Name)}Question = new ${query.ObjectName}Question(#parse("tpl/params/unittestfunctionparam.vm"));
+        final ${query.ObjectName}Response result = ${display.uncapitalize($comp.Name)}.get${query.ObjectName}(${display.uncapitalize($comp.Name)}Question);
+        #else
+        final ${query.ObjectName}Response result = ${display.uncapitalize($comp.Name)}.get${query.ObjectName}();
+        #end
+        
+        // assert : verify that the test run correctly
+        assertNotNull(result);
+    }
+
+#end
+    /**
+     * Test getImage method.
+     *
+     * @throws JtvdbException
+     */
+    @org.junit.Test 
+    public void getImage_Test() throws JtvdbException {
+        // arrange : set up the test
+        final ${loginQuery.ObjectName}Question ${display.uncapitalize($loginQuery.ObjectName)}Question = new ${loginQuery.ObjectName}Question(this.apiKey, this.userKey, this.userName);
+        
+        // act : run the test
+        final ${comp.Name} ${display.uncapitalize($comp.Name)} = new ${comp.Name}(${display.uncapitalize($loginQuery.ObjectName)}Question);
+        String urlImage = "";
+        final BufferedImage result = ${display.uncapitalize($comp.Name)}.getImage(urlImage);
+        
+        // assert : verify that the test run correctly
+        assertNotNull(result);
+    }
+
+}

@@ -33,10 +33,24 @@ public class QueryReaderHelper {
     @Nullable
     public static Query getQuery(final String filePath) {
         Query result = null;
-        try {
-            final ClassLoader classLoader = QueryReaderHelper.class.getClassLoader();
-            final File file = new File(classLoader.getResource(filePath).getFile());
+        final ClassLoader classLoader = QueryReaderHelper.class.getClassLoader();
+        final File file = new File(classLoader.getResource(filePath).getFile());
 
+        result = getQuery(file);
+
+        return result;
+    }
+
+    /**
+     * Get Query from XML Query file.
+     *
+     * @param file
+     * @return Query
+     */
+    @Nullable
+    public static Query getQuery(final File file) {
+        Query result = null;
+        try {
             final JAXBContext jc = JAXBContext.newInstance(ObjectFactory.class.getPackage().getName());
             final Unmarshaller unmarshaller = jc.createUnmarshaller();
 

@@ -1,0 +1,1 @@
+#foreach ($mapEntry in ${query.ObjectQuestionParam.entrySet()})${display.uncapitalize($mapEntry.value.ParamName)}#if(${foreach.count} < ${query.ObjectQuestionParam.size()}), #end#end
