@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/series/{id}/episodes/summary</Url>
+	<Description>
+Returns a summary of the episodes and seasons available for the series.</Description>
+	<Url><![CDATA[https://api.thetvdb.com/series/{id}/episodes/summary]]></Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Path>

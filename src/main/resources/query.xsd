@@ -2,6 +2,7 @@
   <xs:element name="Query">
     <xs:complexType>
       <xs:sequence>
+        <xs:element type="xs:string" name="Description"/>
         <xs:element type="xs:anyURI" name="Url"/>
         <xs:element name="Method">
           <xs:complexType>

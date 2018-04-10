@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
+	<Description>Get the list translations for a collection by id.</Description>
 	<Url><![CDATA[https://api.themoviedb.org/3/collection/{collection_id}/translations?api_key={api_key}&language={language}]]></Url>
 	<Method type="GET">question.json</Method>
 	<Parameters>

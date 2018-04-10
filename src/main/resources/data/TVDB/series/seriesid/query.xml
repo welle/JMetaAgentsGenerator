@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/series/{id}</Url>
+	<Description>Returns a series records that contains all information known about a particular series id.</Description>
+	<Url><![CDATA[https://api.thetvdb.com/series/{id}]]></Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Headers>

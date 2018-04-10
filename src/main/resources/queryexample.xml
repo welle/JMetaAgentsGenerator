@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>http://www.example.com</Url>
+	<Description>the description that will appear in javadoc</Description>
+	<Url><![CDATA[http://www.example.com]]></Url>
 	<Method type="POST|GET">question.json</Method>
 	<Parameters>
 		<Headers>

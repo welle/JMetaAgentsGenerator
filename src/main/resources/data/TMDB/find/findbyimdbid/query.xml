@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
+	<Description>The find method makes it easy to search for objects in our database by an IMDB id.</Description>
 	<Url><![CDATA[https://api.themoviedb.org/3/find/{external_id}?api_key={api_key}&language={language}&external_source=imdb_id]]></Url>
 	<Method type="GET">question.json</Method>
 	<Parameters>

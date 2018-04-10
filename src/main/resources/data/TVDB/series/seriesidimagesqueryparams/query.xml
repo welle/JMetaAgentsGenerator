@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/series/{id}/images/query/params</Url>
+	<Description>Returns the allowed query keys for the /series/{id}/images/query route. Contains a parameter record for each unique keyType, listing values that will return results.</Description>
+	<Url><![CDATA[https://api.thetvdb.com/series/{id}/images/query/params]]></Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Headers>

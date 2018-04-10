@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/refresh_token</Url>
+	<Description>Refreshes your current, valid JWT token and returns a new token.</Description>
+	<Url><![CDATA[https://api.thetvdb.com/refresh_token]]></Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Headers>

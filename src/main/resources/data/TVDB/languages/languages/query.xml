@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/languages</Url>
+	<Description>All available languages.</Description>
+	<Url><![CDATA[https://api.thetvdb.com/languages]]></Url>
 	<Method type="GET"></Method>
 	<Response>response.json</Response>
 </Query>

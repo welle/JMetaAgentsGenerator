@@ -1,0 +1,48 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "backdrop_path": "/AwB0BmQm1GxP0BH8ZL7WPNDTkb5.jpg",
+      "first_air_date": "2016-01-05",
+      "genre_ids": [
+        10759,
+        10765
+      ],
+      "id": 64122,
+      "original_language": "en",
+      "original_name": "The Shannara Chronicles",
+      "overview": "A young Healer armed with an unpredictable magic guides a runaway Elf in her perilous quest to save the peoples of the Four Lands from an age-old Demon scourge.",
+      "origin_country": [
+        "US"
+      ],
+      "poster_path": "/aurZJ8UsXqhGwwBnNuZsPNepY8y.jpg",
+      "popularity": 9.523348,
+      "name": "The Shannara Chronicles",
+      "vote_average": 5.5,
+      "vote_count": 61
+    },
+    {
+      "backdrop_path": "/cJotBRRn7zj4Ed95ibusfU4pqis.jpg",
+      "first_air_date": "2013-06-24",
+      "genre_ids": [
+        18,
+        9648,
+        10765
+      ],
+      "id": 46331,
+      "original_language": "en",
+      "original_name": "Under the Dome",
+      "overview": "Under the Dome is based on the novel of the same name by Stephen King. It tells the story of the residents of the small town of Chester's Mill in Maine, where a massive, transparent, indestructible dome suddenly cuts them off from the rest of the world. With no Internet access, no mobile signals and limited radio communication, the people trapped inside must find their own ways to survive with diminishing resources and rising tensions. While military forces, the government and the media positioned outside of this surrounding barrier attempt to break it down, a small group of people inside attempt to figure out what the dome is, where it came from, and when (and if) it will go away.",
+      "origin_country": [
+        "US"
+      ],
+      "poster_path": "/iFnCH70twxNDICQlDuCcoEt4Jma.jpg",
+      "popularity": 4.961561,
+      "name": "Under the Dome",
+      "vote_average": 6.6,
+      "vote_count": 134
+    }
+  ],
+  "total_pages": 10,
+  "total_results": 185
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+	<Description>Get the list of TV show recommendations for this item.</Description>
+	<Url><![CDATA[https://api.themoviedb.org/3/tv/{tv_id}/recommendations?api_key={api_key}&language={language}&page={page}]]></Url>
+	<Method type="GET">question.json</Method>
+	<Parameters>
+		<Path>
+			<Parameter name="tv_id" type="PARAM">tv_id</Parameter>
+			<Parameter name="api_key" type="PARAM">apikey</Parameter>
+			<Parameter name="language" type="PARAM">language</Parameter>
+			<Parameter name="page" type="PARAM">page</Parameter>
+		</Path>
+	</Parameters>
+	<Response>response.json</Response>
+</Query>

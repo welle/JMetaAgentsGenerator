@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/search/series</Url>
+	<Description>Allows the user to search for a series based on the following parameters.</Description>
+	<Url><![CDATA[https://api.thetvdb.com/search/series]]></Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Headers>

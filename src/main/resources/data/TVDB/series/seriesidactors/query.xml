@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/series/{id}/actors</Url>
+	<Description>Returns actors for the given series id</Description>
+	<Url><![CDATA[https://api.thetvdb.com/series/{id}/actors]]></Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Path>

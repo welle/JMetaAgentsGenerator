@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/login</Url>
+	<Description>Returns a session token to be included in the rest of the requests.</Description>
+	<Url><![CDATA[https://api.thetvdb.com/login]]></Url>
 	<Method type="POST">question.json</Method>
 	<Parameters>
 		<Headers>

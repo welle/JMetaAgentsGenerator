@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.themoviedb.org/3/authentication/guest_session/new?api_key={api_key}</Url>
+	<Description>This method will let you create a new guest session. Guest sessions are a type of session that will let a user rate movies and TV shows but not require them to have a TMDb user account.</Description>
+	<Url><![CDATA[https://api.themoviedb.org/3/authentication/guest_session/new?api_key={api_key}]]></Url>
 	<Method type="GET">question.json</Method>
 	<Parameters>
 		<Path>

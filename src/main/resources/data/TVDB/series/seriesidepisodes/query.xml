@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/series/{id}/episodes</Url>
+	<Description>All episodes for a given series. Paginated with 100 results per page.</Description>
+	<Url><![CDATA[https://api.thetvdb.com/series/{id}/episodes]]></Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Path>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
+	<Description>Get the cast and crew for a movie.</Description>
 	<Url><![CDATA[https://api.themoviedb.org/3/movie/{movie_id}/credits?api_key={api_key}]]></Url>
 	<Method type="GET">question.json</Method>
 	<Parameters>

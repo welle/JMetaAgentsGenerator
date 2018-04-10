@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
+	<Description>Get a companies details by id.</Description>
 	<Url><![CDATA[https://api.themoviedb.org/3/company/{company_id}?api_key={api_key}]]></Url>
 	<Method type="GET">question.json</Method>
 	<Parameters>

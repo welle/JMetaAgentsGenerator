@@ -105,7 +105,10 @@ public final class ${comp.Name} extends AbstractAgent {
 
 #foreach( $query in ${queryList.Queries} )    
     /**
-     * Get ${query.ObjectName}.
+     * Get ${query.ObjectName}.<br/>
+     #if( ${query.Query.Description} )
+     * ${query.Query.Description}
+     #end
      *
      #if( ${query.ExistQuestion} )
      * @param ${display.uncapitalize($query.ObjectName)}Question the query

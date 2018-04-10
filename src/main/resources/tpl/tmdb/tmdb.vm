@@ -60,12 +60,8 @@ public final class ${comp.Name} extends AbstractAgent {
     /**
      * Get Guest Token.
      *
-     #if( ${query.ExistQuestion} )
-     * @param ${display.uncapitalize($query.ObjectName)}Question the query
-     #end
-     #if( ${query.ExistResponse} )
-     * @return ${query.ObjectName}Response
-     #end
+     * @param ${display.uncapitalize($loginQuery.ObjectName)}Question the query
+     * @return token
      * @throws JtmdbException
      */
     @Nullable
@@ -107,7 +103,10 @@ public final class ${comp.Name} extends AbstractAgent {
 
 #foreach( $query in ${queryList.Queries} )    
     /**
-     * Get ${query.ObjectName}.
+     * Get ${query.ObjectName}.<br/>
+     #if( ${query.Query.Description} )
+     * ${query.Query.Description}
+     #end
      *
      #if( ${query.ExistQuestion} )
      * @param ${display.uncapitalize($query.ObjectName)}Question the query

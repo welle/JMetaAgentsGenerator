@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/series/{id}/images</Url>
+	<Description>Returns a summary of the images for a particular series</Description>
+	<Url><![CDATA[https://api.thetvdb.com/series/{id}/images]]></Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Headers>

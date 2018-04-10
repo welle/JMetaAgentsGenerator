@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+	<Description>Get the images that belong to a TV season.</Description>
+	<Url><![CDATA[https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}/videos?api_key={api_key}&language={language}]]></Url>
+	<Method type="GET">question.json</Method>
+	<Parameters>
+		<Path>
+			<Parameter name="tv_id" type="PARAM">tv_id</Parameter>
+			<Parameter name="season_number" type="PARAM">season_number</Parameter>
+			<Parameter name="api_key" type="PARAM">apikey</Parameter>
+			<Parameter name="language" type="PARAM">language</Parameter>
+		</Path>
+	</Parameters>
+	<Response>response.json</Response>
+</Query>

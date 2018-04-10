@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/series/{id}/episodes/query/params</Url>
+	<Description>Returns the allowed query keys for the /series/{id}/episodes/query route.</Description>
+	<Url><![CDATA[https://api.thetvdb.com/series/{id}/episodes/query/params]]></Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Path>

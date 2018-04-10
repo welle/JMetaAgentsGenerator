@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/languages/{id}</Url>
+	<Description>Information about a particular language, given the language ID.</Description>
+	<Url><![CDATA[https://api.thetvdb.com/languages/{id}]]></Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Path>

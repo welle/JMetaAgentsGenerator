@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/series/{id}/filter</Url>
+	<Description>Returns a series records, filtered by the supplied comma-separated list of keys. Query keys can be found at the /series/{id}/filter/params route.</Description>
+	<Url><![CDATA[https://api.thetvdb.com/series/{id}/filter]]></Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Headers>

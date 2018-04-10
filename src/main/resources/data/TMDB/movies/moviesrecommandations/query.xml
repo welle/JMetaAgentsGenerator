@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
+	<Description>Get a list of recommended movies for a movie.</Description>
 	<Url><![CDATA[https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={api_key}&language={language}&page={page}]]></Url>
 	<Method type="GET">question.json</Method>
 	<Parameters>

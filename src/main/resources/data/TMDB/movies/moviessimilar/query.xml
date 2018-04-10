@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
+	<Description>Get a list of similar movies. This is not the same as the "Recommendation" system you see on the website.<br/>These items are assembled by looking at keywords and genres.</Description>
 	<Url><![CDATA[https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key={api_key}&language={language}&page={page}]]></Url>
 	<Method type="GET">question.json</Method>
 	<Parameters>
