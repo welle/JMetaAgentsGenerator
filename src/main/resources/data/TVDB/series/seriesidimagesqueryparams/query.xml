@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/series/{id}/episodes/query</Url>
+	<Url>https://api.thetvdb.com/series/{id}/images/query/params</Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Headers>

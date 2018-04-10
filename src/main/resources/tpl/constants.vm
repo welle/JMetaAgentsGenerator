@@ -1,29 +1,46 @@
 package ${package};
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
- * The super class for all exceptions in ${comp.Name}.
+ * List of constants for the differents helpers.
+ *
+ * @author Charlotte
+ *
  */
-public class ${comp.Name}Exception extends Exception {
-
-    private static final long serialVersionUID = ${comp.SerialUID};
+public final class MetaagentConstants {
 
     /**
-     * Create exception with text/message.
-     *
-     * @param text text/message
+     * The movie DB API key.
      */
-    public ${comp.Name}Exception(final String text) {
-        super(text);
-    }
+    @NonNull
+    public static final String THE_MOVIE_DB_API_KEY = "${THE_MOVIE_DB_API_KEY_VALUE}";
 
     /**
-     * Create exception with text/message and the cause.
-     *
-     * @param text text/message
-     * @param cause the Throwable that caused the exception
+     * The allocine DB API key.
      */
-    public ${comp.Name}Exception(final String text, final Throwable cause) {
-        super(text, cause);
-    }
+    @NonNull
+    public static final String ALLOCINE_API_KEY = "${ALLOCINEAPIKEY_VALUE}";
 
+    /**
+     * TVDB API key value.
+     */
+    @NonNull
+    public static final String TVDB_API_KEY = "${TVDB_API_KEY_VALUE}";
+
+    /**
+     * TVDB Username value.
+     */
+    @NonNull
+    public static final String TVDB_USERNAME = "${TVDB_USERNAME_VALUE}";
+
+    /**
+     * TVDB User key value.
+     */
+    @NonNull
+    public static final String TVDB_USER_KEY = "${TVDB_USER_KEY_VALUE}";
+
+    private MetaagentConstants() {
+        // singleton
+    }
 }

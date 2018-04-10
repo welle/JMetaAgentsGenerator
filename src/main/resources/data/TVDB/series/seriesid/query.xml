@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Query>
-	<Url>https://api.thetvdb.com/series/{id}/episodes/query</Url>
+	<Url>https://api.thetvdb.com/series/{id}</Url>
 	<Method type="GET"></Method>
 	<Parameters>
 		<Headers>
@@ -9,6 +9,8 @@
 		<Path>
 			<Parameter name="id" type="JSON"></Parameter>
 		</Path>
+		<UrlQuery>
+		</UrlQuery>
 	</Parameters>
 	<Response>response.json</Response>
 </Query>

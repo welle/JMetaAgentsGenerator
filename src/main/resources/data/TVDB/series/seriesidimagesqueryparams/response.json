@@ -1,0 +1,14 @@
+{
+  "data": [
+    {
+      "keyType": "string",
+      "languageId": "string",
+      "resolution": [
+        "string"
+      ],
+      "subKey": [
+        "string"
+      ]
+    }
+  ]
+}

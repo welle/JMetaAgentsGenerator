@@ -84,7 +84,16 @@ public class JMetaAgentsGenerator extends AbstractGenerator {
         generateExceptionFile(apiInformation);
         // generate abstract OK
         generateAbstract();
-        // generate constant file ?
+        // generate constant file for tests
+        generateTestConstants();
+    }
+
+    private void generateTestConstants() {
+        final VelocityContext context = new VelocityContext();
+        final Root root = new Root();
+        root.setSerialUID("1L");
+        context.put("package", this.basePackage);
+        callVelocity(this.destinationTestPath + "/MetaagentConstants.java", "tpl/constants.vm", context);
     }
 
     private void generateAbstract() {

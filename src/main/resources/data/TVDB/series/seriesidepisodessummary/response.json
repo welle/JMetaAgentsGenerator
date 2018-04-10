@@ -1,0 +1,10 @@
+{
+  "airedEpisodes": "string",
+  "airedSeasons": [
+    "string"
+  ],
+  "dvdEpisodes": "string",
+  "dvdSeasons": [
+    "string"
+  ]
+}

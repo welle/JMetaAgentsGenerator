@@ -1,0 +1,26 @@
+{
+  "data": [
+    {
+      "fileName": "string",
+      "id": 0,
+      "keyType": "string",
+      "languageId": 0,
+      "ratingsInfo": {
+        "average": 0,
+        "count": 0
+      },
+      "resolution": "string",
+      "subKey": "string",
+      "thumbnail": "string"
+    }
+  ],
+  "errors": {
+    "invalidFilters": [
+      "string"
+    ],
+    "invalidLanguage": "string",
+    "invalidQueryParams": [
+      "string"
+    ]
+  }
+}

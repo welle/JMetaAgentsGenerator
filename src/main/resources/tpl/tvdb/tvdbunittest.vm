@@ -9,35 +9,21 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Locale;
 
-import org.apache.http.entity.StringEntity;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
-import aka.jhttprequest.main.HTTPManager;
-import aka.jhttprequest.main.common.HTTPRequestData;
-import aka.jhttprequest.main.common.HTTPResponseBufferedImage;
-import aka.jhttprequest.main.common.HTTPResponseString;
-import aka.jhttprequest.main.constants.MimeTypeConstants;
-import aka.jhttprequest.main.exceptions.HTTPException;
-import ${package}.AbstractAgent;
+import ${package}.MetaagentConstants;
 import ${subpackage}.exceptions.JtvdbException;
 import ${subpackage}.${comp.Name};
 import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}Question;
-import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}QuestionJacksonMapper;
 import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}Response;
-import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}ResponseJacksonMapper;
 #foreach( $query in ${queryList.Queries} )
 #if( ${query.ExistQuestion} )
 import ${package}.${query.Package}.${query.ObjectName}Question;
-import ${package}.${query.Package}.${query.ObjectName}QuestionJacksonMapper;
 #end
 #if( ${query.ExistResponse} )
 import ${package}.${query.Package}.${query.ObjectName}Response;
-import ${package}.${query.Package}.${query.ObjectName}ResponseJacksonMapper;
 #end
 #end
 
@@ -46,12 +32,9 @@ import ${package}.${query.Package}.${query.ObjectName}ResponseJacksonMapper;
  */
 public final class ${comp.Name}_Test {
 
-    // TO BE FILLED
-    private @NonNull String apiKey = "";
-    // TO BE FILLED
-    private @NonNull String userKey = "";
-    // TO BE FILLED
-    private @NonNull String userName = "";
+    private @NonNull String apiKey = MetaagentConstants.TVDB_API_KEY;
+    private @NonNull String userKey = MetaagentConstants.TVDB_USER_KEY;
+    private @NonNull String userName = MetaagentConstants.TVDB_USERNAME;
 
 #foreach( $query in ${queryList.Queries} )    
     /**
