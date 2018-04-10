@@ -1,0 +1,82 @@
+package ${subpackage};
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+
+import java.awt.image.BufferedImage;
+
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
+import ${package}.MetaagentConstants;
+import ${subpackage}.exceptions.JtmdbException;
+import ${subpackage}.${comp.Name};
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}Question;
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}Response;
+#foreach( $query in ${queryList.Queries} )
+#if( ${query.ExistQuestion} )
+import ${package}.${query.Package}.${query.ObjectName}Question;
+#end
+#if( ${query.ExistResponse} )
+import ${package}.${query.Package}.${query.ObjectName}Response;
+#end
+#end
+
+/**
+ * Generated ${comp.Name} Tests unit.
+ */
+public final class ${comp.Name}_Test {
+
+    private @NonNull String apiKey = MetaagentConstants.THE_MOVIE_DB_API_KEY;
+
+#foreach( $query in ${queryList.Queries} )    
+    /**
+     * Test get${query.ObjectName} method.
+     *
+     * @throws JtmdbException
+     */
+    @org.junit.Test 
+    public void get${query.ObjectName}_Test() throws JtmdbException {
+        // arrange : set up the test
+        final ${loginQuery.ObjectName}Question ${display.uncapitalize($loginQuery.ObjectName)}Question = new ${loginQuery.ObjectName}Question(this.apiKey);
+        final ${comp.Name} ${display.uncapitalize($comp.Name)} = new ${comp.Name}(${display.uncapitalize($loginQuery.ObjectName)}Question);
+        
+        // act : run the test
+        #if( ${query.ExistQuestion} )
+        #parse("tpl/params/unittestparam.vm")
+        final ${query.ObjectName}Question ${display.uncapitalize($comp.Name)}Question = new ${query.ObjectName}Question(#parse("tpl/params/unittestfunctionparam.vm"));
+        final ${query.ObjectName}Response result = ${display.uncapitalize($comp.Name)}.get${query.ObjectName}(${display.uncapitalize($comp.Name)}Question);
+        #else
+        final ${query.ObjectName}Response result = ${display.uncapitalize($comp.Name)}.get${query.ObjectName}();
+        #end
+        
+        // assert : verify that the test run correctly
+        assertNotNull(result);
+    }
+
+#end
+    /**
+     * Test getImage method.
+     *
+     * @throws JtmdbException
+     */
+    @org.junit.Test 
+    public void getImage_Test() throws JtmdbException {
+        // arrange : set up the test
+        final ${loginQuery.ObjectName}Question ${display.uncapitalize($loginQuery.ObjectName)}Question = new ${loginQuery.ObjectName}Question(this.apiKey);
+        
+        // act : run the test
+        final ${comp.Name} ${display.uncapitalize($comp.Name)} = new ${comp.Name}(${display.uncapitalize($loginQuery.ObjectName)}Question);
+        String urlImage = "";
+        final BufferedImage result = ${display.uncapitalize($comp.Name)}.getImage(urlImage);
+        
+        // assert : verify that the test run correctly
+        assertNotNull(result);
+    }
+
+}

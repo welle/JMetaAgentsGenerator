@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+	<Url>https://api.themoviedb.org/3/authentication/guest_session/new?api_key={api_key}</Url>
+	<Method type="GET">question.json</Method>
+	<Parameters>
+		<Path>
+			<Parameter name="api_key" type="PARAM">api_key</Parameter>
+		</Path>
+	</Parameters>
+	<Response>response.json</Response>
+</Query>

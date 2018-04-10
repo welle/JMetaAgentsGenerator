@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+	<Url><![CDATA[https://api.themoviedb.org/3/company/{company_id}?api_key={api_key}]]></Url>
+	<Method type="GET">question.json</Method>
+	<Parameters>
+		<Path>
+			<Parameter name="company_id" type="PARAM">company_id</Parameter>
+		</Path>
+	</Parameters>
+	<Response>response.json</Response>
+</Query>

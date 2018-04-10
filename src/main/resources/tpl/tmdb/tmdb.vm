@@ -1,0 +1,184 @@
+package ${subpackage};
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Locale;
+
+import org.apache.http.entity.StringEntity;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
+import aka.jhttprequest.main.HTTPManager;
+import aka.jhttprequest.main.common.HTTPRequestData;
+import aka.jhttprequest.main.common.HTTPResponseBufferedImage;
+import aka.jhttprequest.main.common.HTTPResponseString;
+import aka.jhttprequest.main.constants.MimeTypeConstants;
+import aka.jhttprequest.main.exceptions.HTTPException;
+import ${package}.AbstractAgent;
+import ${subpackage}.exceptions.JtmdbException;
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}Question;
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}QuestionJacksonMapper;
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}Response;
+import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}ResponseJacksonMapper;
+#foreach( $query in ${queryList.Queries} )
+#if( ${query.ExistQuestion} )
+import ${package}.${query.Package}.${query.ObjectName}Question;
+import ${package}.${query.Package}.${query.ObjectName}QuestionJacksonMapper;
+#end
+#if( ${query.ExistResponse} )
+import ${package}.${query.Package}.${query.ObjectName}Response;
+import ${package}.${query.Package}.${query.ObjectName}ResponseJacksonMapper;
+#end
+#end
+
+/**
+ * Generated ${comp.Name}.
+ */
+public final class ${comp.Name} extends AbstractAgent {
+
+    private @NonNull final HTTPManager httpManager;
+    private @NonNull final String apiKey;
+
+    /**
+     * Constructor.
+     *
+     * @param ${display.uncapitalize($loginQuery.ObjectName)}Question the object required to login in the API.
+     * @throws JtmdbException
+     */
+    public ${comp.Name}(@NonNull final ${loginQuery.ObjectName}Question ${display.uncapitalize($loginQuery.ObjectName)}Question) throws JtmdbException {
+        super();
+
+        this.httpManager = new HTTPManager();
+        final String currentToken = ${display.uncapitalize($loginQuery.ObjectName)}Question.getApikey();
+        if (currentToken == null) {
+            throw new JtmdbException("Could not retrieve token.");
+        }
+        this.apiKey = currentToken;
+    }
+
+    /**
+     * Get Guest Token.
+     *
+     #if( ${query.ExistQuestion} )
+     * @param ${display.uncapitalize($query.ObjectName)}Question the query
+     #end
+     #if( ${query.ExistResponse} )
+     * @return ${query.ObjectName}Response
+     #end
+     * @throws JtmdbException
+     */
+    @Nullable
+    public String getGuestToken(@NonNull final ${loginQuery.ObjectName}Question ${display.uncapitalize($loginQuery.ObjectName)}Question) throws JtmdbException {
+        String result = null;
+
+        try {
+            String url = "${loginQuery.Query.Url}";
+            url = url.replace("{api_key}", this.apiKey);
+        #if(  ${loginQuery.Query.Method.Value} == "" )
+			final HTTPRequestData httpRequestData = new HTTPRequestData(url);
+		#else
+            final String json = ${loginQuery.ObjectName}QuestionJacksonMapper.writeValue(${display.uncapitalize($loginQuery.ObjectName)}Question);
+            assert json != null;
+            final HTTPRequestData httpRequestData = new HTTPRequestData(url, new StringEntity(json));
+        #end    
+        #foreach( $header in ${loginQuery.Query.Parameters.Headers.parameter} )
+            httpRequestData.addHeader("${header.name}", "${header.value}");
+		#end      
+
+        #if( ${loginQuery.Query.Method.Type} == "GET" )
+            final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendGetRequest(httpRequestData);
+        #elseif( ${loginQuery.Query.Method.Type} == "POST" )  
+        	final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendPostRequest(httpRequestData);  
+		#end
+            final String jsonString = response.getContent();
+
+            @Nullable
+            final ${loginQuery.ObjectName}Response ${display.uncapitalize($loginQuery.ObjectName)}Response = readValue(${loginQuery.ObjectName}ResponseJacksonMapper.class, jsonString);
+            if (${display.uncapitalize($loginQuery.ObjectName)}Response != null) {
+                result = ${display.uncapitalize($loginQuery.ObjectName)}Response.getGuestSessionId();
+            }
+        } catch (final HTTPException | IOException e) {
+            throw new JtmdbException(e.getMessage(), e.getCause());
+        }
+
+        return result;
+    }
+
+#foreach( $query in ${queryList.Queries} )    
+    /**
+     * Get ${query.ObjectName}.
+     *
+     #if( ${query.ExistQuestion} )
+     * @param ${display.uncapitalize($query.ObjectName)}Question the query
+     #end
+     #if( ${query.ExistResponse} )
+     * @return ${query.ObjectName}Response
+     #end
+     * @throws JtmdbException
+     */
+    @Nullable
+    public final#if( ${query.ExistResponse} ) ${query.ObjectName}Response get${query.ObjectName}#else void  ${display.uncapitalize($query.ObjectName)}#end(#if( ${query.ExistQuestion} )@NonNull ${query.ObjectName}Question ${display.uncapitalize($query.ObjectName)}Question#end) throws JtmdbException {
+        ${query.ObjectName}Response result = null;
+        
+        try {
+        #if( ${query.Query.Parameters.Path.parameter.size()} == 0 )
+            final String url = "${query.Query.Url}";
+        #else
+            String url = "${query.Query.Url}";
+        #end
+            url = url.replace("{api_key}", this.apiKey);
+        #parse("tpl/params/urlpathparam.vm")
+
+            final HTTPRequestData httpRequestData = new HTTPRequestData(url);
+		#parse("tpl/params/headerparam.vm")
+
+		#parse("tpl/params/queryurlparam.vm")
+		#if( ${query.Query.Method.Type} == "GET" )
+            final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendGetRequest(httpRequestData);
+        #elseif( ${query.Query.Method.Type} == "POST" )  
+            final HTTPResponseString response = (HTTPResponseString) this.httpManager.sendPostRequest(httpRequestData);  
+		#end
+            final String jsonString = response.getContent();
+            result = readValue(${query.ObjectName}ResponseJacksonMapper.class, jsonString);
+        } catch (final HTTPException | MalformedURLException e) {
+            throw new JtmdbException(e.getMessage(), e.getCause());
+        }
+        return result;
+    }
+
+#end
+    /**
+     * This method does not matter if the URL is absolute or relative.
+     *
+     * @param url
+     * @return image from the URL
+     * @throws JtmdbException
+     * @see BufferedImage
+     */
+    @Nullable
+    public final BufferedImage getImage(@NonNull final String url) throws JtmdbException {
+        BufferedImage result = null;
+
+        try {
+            HTTPRequestData httpRequestData;
+            if (url.toLowerCase().contains("http")) {
+                httpRequestData = new HTTPRequestData(url);
+            } else {
+                final StringBuilder sb = new StringBuilder();
+                sb.append("http://cf2.imgobject.com/t/p/original");
+                sb.append(url);
+                final String newURL = sb.toString();
+                httpRequestData = new HTTPRequestData(newURL);
+            }
+
+            final HTTPResponseBufferedImage response = (HTTPResponseBufferedImage) this.httpManager.sendGetRequest(httpRequestData);
+            result = response.getContent();
+        } catch (final HTTPException | MalformedURLException e) {
+            throw new JtmdbException(e.getMessage(), e.getCause());
+        }
+
+        return result;
+    }
+
+}

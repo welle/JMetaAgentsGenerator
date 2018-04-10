@@ -1,0 +1,44 @@
+{
+  "id": 550,
+  "cast": [
+    {
+      "cast_id": 4,
+      "character": "The Narrator",
+      "credit_id": "52fe4250c3a36847f80149f3",
+      "gender": 2,
+      "id": 819,
+      "name": "Edward Norton",
+      "order": 0,
+      "profile_path": "/eIkFHNlfretLS1spAcIoihKUS62.jpg"
+    },
+    {
+      "cast_id": 5,
+      "character": "Tyler Durden",
+      "credit_id": "52fe4250c3a36847f80149f7",
+      "gender": 2,
+      "id": 287,
+      "name": "Brad Pitt",
+      "order": 1,
+      "profile_path": "/kc3M04QQAuZ9woUvH3Ju5T7ZqG5.jpg"
+    },
+    {
+      "cast_id": 7,
+      "character": "Robert 'Bob' Paulson",
+      "credit_id": "52fe4250c3a36847f80149ff",
+      "gender": 2,
+      "id": 7470,
+      "name": "Meat Loaf",
+      "order": 2,
+      "profile_path": "/43nyfW3TxD3PxDqYB8tyqaKpDBH.jpg"
+    },
+    {
+      "credit_id": "57fe1e549251410699007177",
+      "department": "Costume & Make-Up",
+      "gender": 1,
+      "id": 1693424,
+      "job": "Assistant Costume Designer",
+      "name": "Mirela Rupic",
+      "profile_path": "/5z0I2eRwBrJjSv27ig4VnU0lmCZ.jpg"
+    }
+  ]
+}

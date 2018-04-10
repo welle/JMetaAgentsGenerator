@@ -1,0 +1,101 @@
+{
+  "id": 10,
+  "translations": [
+    {
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "name": "English",
+      "english_name": "English"
+    },
+    {
+      "iso_639_1": "zh",
+      "iso_3166_1": "CN",
+      "name": "中国",
+      "english_name": "Mandarin"
+    },
+    {
+      "iso_639_1": "de",
+      "iso_3166_1": "DE",
+      "name": "Deutsch",
+      "english_name": "German"
+    },
+    {
+      "iso_639_1": "fr",
+      "iso_3166_1": "FR",
+      "name": "Français",
+      "english_name": "French"
+    },
+    {
+      "iso_639_1": "pt",
+      "iso_3166_1": "PT",
+      "name": "Português",
+      "english_name": "Portuguese"
+    },
+    {
+      "iso_639_1": "he",
+      "iso_3166_1": "IL",
+      "name": "עִבְרִית",
+      "english_name": "Hebrew"
+    },
+    {
+      "iso_639_1": "da",
+      "iso_3166_1": "DK",
+      "name": "Dansk",
+      "english_name": "Danish"
+    },
+    {
+      "iso_639_1": "es",
+      "iso_3166_1": "ES",
+      "name": "Español",
+      "english_name": "Spanish"
+    },
+    {
+      "iso_639_1": "nl",
+      "iso_3166_1": "NL",
+      "name": "Nederlands",
+      "english_name": "Dutch"
+    },
+    {
+      "iso_639_1": "ru",
+      "iso_3166_1": "RU",
+      "name": "Pусский",
+      "english_name": "Russian"
+    },
+    {
+      "iso_639_1": "hu",
+      "iso_3166_1": "HU",
+      "name": "Magyar",
+      "english_name": "Hungarian"
+    },
+    {
+      "iso_639_1": "it",
+      "iso_3166_1": "IT",
+      "name": "Italiano",
+      "english_name": "Italian"
+    },
+    {
+      "iso_639_1": "cs",
+      "iso_3166_1": "CZ",
+      "name": "Český",
+      "english_name": "Czech"
+    },
+    {
+      "iso_639_1": "bg",
+      "iso_3166_1": "BG",
+      "name": "български език",
+      "english_name": "Bulgarian"
+    },
+    {
+      "iso_639_1": "sv",
+      "iso_3166_1": "SE",
+      "name": "svenska",
+      "english_name": "Swedish"
+    },
+    {
+      "iso_639_1": "ch",
+      "iso_3166_1": "GU",
+      "name": "",
+      "english_name": "Chamorro"
+    }
+  ]
+}

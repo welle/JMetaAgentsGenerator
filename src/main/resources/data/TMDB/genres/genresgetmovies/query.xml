@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+	<Url><![CDATA[https://api.themoviedb.org/3/genre/{genre_id}/movies?api_key={api_key}&language={language}&include_adult={include_adult}&sort_by=created_at.asc]]></Url>
+	<Method type="GET">question.json</Method>
+	<Parameters>
+		<Path>
+			<Parameter name="genre_id" type="PARAM">genre_id</Parameter>
+			<Parameter name="language" type="PARAM">language</Parameter>
+			<Parameter name="include_adult" type="PARAM">include_adult</Parameter>
+		</Path>
+	</Parameters>
+	<Response>response.json</Response>
+</Query>

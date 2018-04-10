@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+	<Url><![CDATA[https://api.themoviedb.org/3/find/{external_id}?api_key={api_key}&language={language}&external_source=imdb_id]]></Url>
+	<Method type="GET">question.json</Method>
+	<Parameters>
+		<Path>
+			<Parameter name="language" type="PARAM">language</Parameter>
+			<Parameter name="external_id" type="PARAM">external_id</Parameter>
+		</Path>
+	</Parameters>
+	<Response>response.json</Response>
+</Query>

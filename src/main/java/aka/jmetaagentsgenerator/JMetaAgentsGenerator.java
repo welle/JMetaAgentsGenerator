@@ -67,8 +67,15 @@ public class JMetaAgentsGenerator extends AbstractGenerator {
                 final JTVDBgenerator bgenerator = new JTVDBgenerator(this.destinationPath, this.destinationTestPath, this.basePackage, apiInformation, buildInformationsList);
                 bgenerator.buildMainTVDB(apiInformation.apiName);
                 bgenerator.buildUnitTestTVDB(apiInformation.apiName);
+            } else if ("tmdb".equals(apiInformation.apiName)) {
+                final JTMDBBgenerator bgenerator = new JTMDBBgenerator(this.destinationPath, this.destinationTestPath, this.basePackage, apiInformation, buildInformationsList);
+                bgenerator.buildMainTMDB(apiInformation.apiName);
+                bgenerator.buildUnitTestTMDB(apiInformation.apiName);
             }
         }
+
+        // generate constant file for tests
+        generateTestConstants();
     }
 
     private void generateForAPI(@NonNull final APIInformation apiInformation, final List<BuildInformation> buildInformationsList) {
@@ -84,8 +91,6 @@ public class JMetaAgentsGenerator extends AbstractGenerator {
         generateExceptionFile(apiInformation);
         // generate abstract OK
         generateAbstract();
-        // generate constant file for tests
-        generateTestConstants();
     }
 
     private void generateTestConstants() {

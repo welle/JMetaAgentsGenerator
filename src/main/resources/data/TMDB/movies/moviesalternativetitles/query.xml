@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+	<Url><![CDATA[https://api.themoviedb.org/3/movie/{movie_id}/alternative_titles?api_key={api_key}&country={country}]]></Url>
+	<Method type="GET">question.json</Method>
+	<Parameters>
+		<Path>
+			<Parameter name="movie_id" type="PARAM">movie_id</Parameter>
+			<Parameter name="country" type="PARAM">country</Parameter>
+		</Path>
+	</Parameters>
+	<Response>response.json</Response>
+</Query>
