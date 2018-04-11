@@ -68,9 +68,13 @@ public class JMetaAgentsGenerator extends AbstractGenerator {
                 bgenerator.buildMainTVDB(apiInformation.apiName);
                 bgenerator.buildUnitTestTVDB(apiInformation.apiName);
             } else if ("tmdb".equals(apiInformation.apiName)) {
-                final JTMDBBgenerator bgenerator = new JTMDBBgenerator(this.destinationPath, this.destinationTestPath, this.basePackage, apiInformation, buildInformationsList);
+                final JTMDBgenerator bgenerator = new JTMDBgenerator(this.destinationPath, this.destinationTestPath, this.basePackage, apiInformation, buildInformationsList);
                 bgenerator.buildMainTMDB(apiInformation.apiName);
                 bgenerator.buildUnitTestTMDB(apiInformation.apiName);
+            } else if ("omdb".equals(apiInformation.apiName)) {
+                final JOMDBgenerator bgenerator = new JOMDBgenerator(this.destinationPath, this.destinationTestPath, this.basePackage, apiInformation, buildInformationsList);
+                bgenerator.buildMainOMDB(apiInformation.apiName);
+                bgenerator.buildUnitTestOMDB(apiInformation.apiName);
             }
         }
 

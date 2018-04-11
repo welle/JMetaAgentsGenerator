@@ -18,17 +18,16 @@ import aka.jmetaagentsgenerator.velocity.Root;
 import aka.jmetaagentsgenerator.velocity.RootQuery;
 import aka.jmetaagentsgenerator.xml.query.QueryReaderHelper;
 
-public class JTMDBBgenerator extends AbstractGenerator {
+public class JOMDBgenerator extends AbstractGenerator {
 
     private @NonNull final String destinationPath;
     private @NonNull final String basePackage;
     private @NonNull final APIInformation apInformation;
     private @NonNull final List<BuildInformation> buildInformationsList;
     private final QueryList queryList;
-    private RootQuery loginQuery;
     private @NonNull final String destinationTestPath;
 
-    public JTMDBBgenerator(@NonNull final String destinationPath, @NonNull final String destinationTestPath, @NonNull final String basePackage, @NonNull final APIInformation apInformation, @NonNull final List<BuildInformation> buildInformationsList) {
+    public JOMDBgenerator(@NonNull final String destinationPath, @NonNull final String destinationTestPath, @NonNull final String basePackage, @NonNull final APIInformation apInformation, @NonNull final List<BuildInformation> buildInformationsList) {
         super(basePackage);
         this.destinationPath = destinationPath;
         this.destinationTestPath = destinationTestPath;
@@ -36,7 +35,6 @@ public class JTMDBBgenerator extends AbstractGenerator {
         this.apInformation = apInformation;
         this.buildInformationsList = buildInformationsList;
         this.queryList = new QueryList();
-        this.loginQuery = new RootQuery();
 
         final List<RootQuery> queries = new ArrayList<>();
         for (final BuildInformation buildInformation : this.buildInformationsList) {
@@ -48,57 +46,47 @@ public class JTMDBBgenerator extends AbstractGenerator {
                 rootQuery.setExistQuestion(buildInformation.questionJSON != null);
                 rootQuery.setExistResponse(buildInformation.responseJSON != null);
                 rootQuery = addJSONQuestionParam(rootQuery, buildInformation);
-                if (buildInformation.baseJavaClassName.toLowerCase().contains("guest")) {
-                    this.loginQuery = rootQuery;
-                } else {
-                    queries.add(rootQuery);
-                }
+                queries.add(rootQuery);
             }
         }
         this.queryList.setQueries(queries);
     }
 
-    public void buildMainTMDB(@NonNull final String apiName) {
+    public void buildMainOMDB(@NonNull final String apiName) {
         try {
             final File file = new File(this.destinationPath + "/" + apiName);
             FileUtils.forceMkdir(file);
             final VelocityContext context = new VelocityContext();
             final Root root = new Root();
-            root.setName("JTMDB");
+            root.setName("JOMDB");
             root.setSerialUID("1L");
             context.put("comp", root);
-            if (this.loginQuery != null) {
-                context.put("loginQuery", this.loginQuery);
-            }
             context.put("queryList", this.queryList);
             context.put("package", this.basePackage);
-            context.put("subpackage", this.basePackage + ".tmdb");
+            context.put("subpackage", this.basePackage + ".omdb");
             context.put("display", new DisplayTool());
-            callVelocity(this.destinationPath + "/" + apiName + "/JTMDB.java", "tpl/tmdb/tmdb.vm", context);
+            callVelocity(this.destinationPath + "/" + apiName + "/JOMDB.java", "tpl/omdb/omdb.vm", context);
         } catch (final IOException e) {
-            LOGGER.logp(Level.SEVERE, "JMetaAgentsGenerator", "buildMainTMDB", e.getMessage(), e);
+            LOGGER.logp(Level.SEVERE, "JMetaAgentsGenerator", "buildMainOMDB", e.getMessage(), e);
         }
     }
 
-    public void buildUnitTestTMDB(@NonNull final String apiName) {
+    public void buildUnitTestOMDB(@NonNull final String apiName) {
         try {
             final File file = new File(this.destinationTestPath + "/" + apiName);
             FileUtils.forceMkdir(file);
             final VelocityContext context = new VelocityContext();
             final Root root = new Root();
-            root.setName("JTMDB");
+            root.setName("JOMDB");
             root.setSerialUID("1L");
             context.put("comp", root);
-            if (this.loginQuery != null) {
-                context.put("loginQuery", this.loginQuery);
-            }
             context.put("queryList", this.queryList);
             context.put("package", this.basePackage);
-            context.put("subpackage", this.basePackage + ".tmdb");
+            context.put("subpackage", this.basePackage + ".omdb");
             context.put("display", new DisplayTool());
-            callVelocity(this.destinationTestPath + "/" + apiName + "/JTMDB_Test.java", "tpl/tmdb/tmdbunittest.vm", context);
+            callVelocity(this.destinationTestPath + "/" + apiName + "/JOMDB_Test.java", "tpl/omdb/omdbunittest.vm", context);
         } catch (final IOException e) {
-            LOGGER.logp(Level.SEVERE, "JMetaAgentsGenerator", "buildUnitTestTMDB", e.getMessage(), e);
+            LOGGER.logp(Level.SEVERE, "JMetaAgentsGenerator", "buildUnitTestOMDB", e.getMessage(), e);
         }
     }
 }

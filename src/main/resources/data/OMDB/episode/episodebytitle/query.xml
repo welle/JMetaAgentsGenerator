@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+	<Description>Get movie details by its IMDB id.</Description>
+	<Url><![CDATA[http://www.omdbapi.com/?apikey={api_key}&t={title}&type=episode&plot=full&r=json&v=1]]></Url>
+	<Method type="GET">question.json</Method>
+	<Parameters>
+		<Path>
+			<Parameter name="title" type="PARAM">title</Parameter>
+		</Path>
+		<UrlQuery>
+			<Parameter name="y" type="PARAM"></Parameter>
+		</UrlQuery>
+	</Parameters>
+	<Response>response.json</Response>
+</Query>

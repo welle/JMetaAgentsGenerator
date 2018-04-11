@@ -14,10 +14,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ${package}.MetaagentConstants;
-import ${subpackage}.exceptions.JtvdbException;
+import ${subpackage}.exceptions.JomdbException;
 import ${subpackage}.${comp.Name};
-import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}Question;
-import ${package}.${loginQuery.Package}.${loginQuery.ObjectName}Response;
 #foreach( $query in ${queryList.Queries} )
 #if( ${query.ExistQuestion} )
 import ${package}.${query.Package}.${query.ObjectName}Question;
@@ -32,21 +30,18 @@ import ${package}.${query.Package}.${query.ObjectName}Response;
  */
 public final class ${comp.Name}_Test {
 
-    private @NonNull String apiKey = MetaagentConstants.TVDB_API_KEY;
-    private @NonNull String userKey = MetaagentConstants.TVDB_USER_KEY;
-    private @NonNull String userName = MetaagentConstants.TVDB_USERNAME;
+    private @NonNull String apiKey = MetaagentConstants.THE_OMDB_API_KEY;
 
 #foreach( $query in ${queryList.Queries} )    
     /**
      * Test get${query.ObjectName} method.
      *
-     * @throws JtvdbException
+     * @throws JomdbException
      */
     @org.junit.Test 
-    public void get${query.ObjectName}_Test() throws JtvdbException {
+    public void get${query.ObjectName}_Test() throws JomdbException {
         // arrange : set up the test
-        final ${loginQuery.ObjectName}Question ${display.uncapitalize($loginQuery.ObjectName)}Question = new ${loginQuery.ObjectName}Question(this.apiKey, this.userKey, this.userName);
-        final ${comp.Name} ${display.uncapitalize($comp.Name)} = new ${comp.Name}(${display.uncapitalize($loginQuery.ObjectName)}Question);
+        final ${comp.Name} ${display.uncapitalize($comp.Name)} = new ${comp.Name}(this.apiKey);
         
         // act : run the test
         #if( ${query.ExistQuestion} )
@@ -65,13 +60,12 @@ public final class ${comp.Name}_Test {
     /**
      * Test getImage method.
      *
-     * @throws JtvdbException
+     * @throws JomdbException
      */
     @org.junit.Test 
-    public void getImage_Test() throws JtvdbException {
+    public void getImage_Test() throws JomdbException {
         // arrange : set up the test
-        final ${loginQuery.ObjectName}Question ${display.uncapitalize($loginQuery.ObjectName)}Question = new ${loginQuery.ObjectName}Question(this.apiKey, this.userKey, this.userName);
-        final ${comp.Name} ${display.uncapitalize($comp.Name)} = new ${comp.Name}(${display.uncapitalize($loginQuery.ObjectName)}Question);
+        final ${comp.Name} ${display.uncapitalize($comp.Name)} = new ${comp.Name}(this.apiKey);
         
         // act : run the test
         String urlImage = "";

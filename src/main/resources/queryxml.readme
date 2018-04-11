@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+	<Description>the description that will appear in javadoc</Description>
+	<Url><![CDATA[http://www.example.com]]></Url> 
+	<Method type="POST|GET">question.json</Method>
+	<Parameters>
+		// Headers will be added in HTTP request header
+		- name will be the name of the header setting (ie: "Accept-Language")
+		- optionvalue: if set, the value itself will be used. If empty: will use the field present in question.json
+		  ie: <Parameter name="test" type="PARAM|JSON"></Parameter> --> currentQueryQuestion.getTest();
+		<Headers>
+			<Parameter name="nameofparameter" type="PARAM|JSON">optionalvalue</Parameter>
+			<Parameter name="nameofparameter" type="PARAM|JSON">optionalvalue</Parameter>
+		</Headers>
+		// Path: {} item will be replaced in URL
+		- name will be the name of the item (ie: {test}) that must be replaced
+		- optionvalue: if set, the value itself will be used. If empty: will use the field present in question.json
+		  ie: <Parameter name="test" type="PARAM|JSON"></Parameter> --> currentQueryQuestion.getTest();
+		<Path>
+			<Parameter name="nameofparameter" type="PARAM|JSON">optionalvalue</Parameter>
+			<Parameter name="nameofparameter" type="PARAM|JSON">optionalvalue</Parameter>
+		</Path>
+		// UrlQuery: item will be append to URL (ie: http://api.example.com/search?test=truc)
+		- name will be the name of the item (ie: test) that must be append
+		- optionvalue: if set, the value itself will be used. If empty: will use the field present in question.json
+		  ie: <Parameter name="test" type="PARAM|JSON"></Parameter> --> currentQueryQuestion.getTest();
+		<UrlQuery>
+			<Parameter name="nameofparameter" type="PARAM|JSON">optionalvalue</Parameter>
+			<Parameter name="nameofparameter" type="PARAM|JSON">optionalvalue</Parameter>
+		</UrlQuery>
+	</Parameters>
+	<Response>response.json</Response>
+</Query>

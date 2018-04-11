@@ -69,9 +69,9 @@ public final class ${comp.Name}_Test {
     public void getImage_Test() throws JtmdbException {
         // arrange : set up the test
         final ${loginQuery.ObjectName}Question ${display.uncapitalize($loginQuery.ObjectName)}Question = new ${loginQuery.ObjectName}Question(this.apiKey);
+        final ${comp.Name} ${display.uncapitalize($comp.Name)} = new ${comp.Name}(${display.uncapitalize($loginQuery.ObjectName)}Question);
         
         // act : run the test
-        final ${comp.Name} ${display.uncapitalize($comp.Name)} = new ${comp.Name}(${display.uncapitalize($loginQuery.ObjectName)}Question);
         String urlImage = "";
         final BufferedImage result = ${display.uncapitalize($comp.Name)}.getImage(urlImage);
         
