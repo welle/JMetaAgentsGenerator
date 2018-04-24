@@ -41,6 +41,7 @@ public class JMetaAgentsGenerator extends AbstractGenerator {
      *
      * @param basePackage base package (ie: aka.jmetaagents).
      * @param destinationPath where to write files.
+     * @param destinationTestPath where to write test class files.
      */
     public JMetaAgentsGenerator(@NonNull final String basePackage, @NonNull final String destinationPath, @NonNull final String destinationTestPath) {
         super(basePackage);
@@ -53,14 +54,17 @@ public class JMetaAgentsGenerator extends AbstractGenerator {
         this.velocityEngine.init();
     }
 
+    /**
+     * Build all API based on the informations present in resources.
+     */
     public void build() {
         // Get all file path in resources
-        final Map<@NonNull APIInformation, List<BuildInformation>> buildInformationByDirectoryMap = getSubPackageByDirectoryMap();
-        for (final Entry<@NonNull APIInformation, List<BuildInformation>> entry : buildInformationByDirectoryMap.entrySet()) {
+        final Map<@NonNull APIInformation, List<@NonNull BuildInformation>> buildInformationByDirectoryMap = getSubPackageByDirectoryMap();
+        for (final Entry<@NonNull APIInformation, List<@NonNull BuildInformation>> entry : buildInformationByDirectoryMap.entrySet()) {
             generateForAPI(entry.getKey(), entry.getValue());
         }
 
-        for (final Entry<@NonNull APIInformation, List<BuildInformation>> entry : buildInformationByDirectoryMap.entrySet()) {
+        for (final Entry<@NonNull APIInformation, List<@NonNull BuildInformation>> entry : buildInformationByDirectoryMap.entrySet()) {
             final APIInformation apiInformation = entry.getKey();
             final List<BuildInformation> buildInformationsList = entry.getValue();
             if ("tvdb".equals(apiInformation.apiName)) {
@@ -82,7 +86,7 @@ public class JMetaAgentsGenerator extends AbstractGenerator {
         generateTestConstants();
     }
 
-    private void generateForAPI(@NonNull final APIInformation apiInformation, final List<BuildInformation> buildInformationsList) {
+    private void generateForAPI(@NonNull final APIInformation apiInformation, @NonNull final List<@NonNull BuildInformation> buildInformationsList) {
         // generate pojo from json OK
         for (final BuildInformation buildInformation : buildInformationsList) {
             try {
@@ -129,21 +133,22 @@ public class JMetaAgentsGenerator extends AbstractGenerator {
         }
     }
 
-    private void generateConstantsFile(@NonNull final APIInformation apiInformation) {
-        try {
-            final File file = new File(apiInformation.getConstantsPath());
-            FileUtils.forceMkdir(file);
-            final VelocityContext context = new VelocityContext();
-            final Root root = new Root();
-            root.setName(apiInformation.getConstantsClassName());
-            root.setSerialUID("1L");
-            context.put("comp", root);
-            context.put("package", apiInformation.getConstantsPackage());
-            callVelocity(apiInformation.getConstantsJavaFile(), "tpl/constants.vm", context);
-        } catch (final IOException e) {
-            LOGGER.logp(Level.SEVERE, "JMetaAgentsGenerator", "generateConstantsFile", e.getMessage(), e);
-        }
-    }
+    // Not use for the moment.
+//    private void generateConstantsFile(@NonNull final APIInformation apiInformation) {
+//        try {
+//            final File file = new File(apiInformation.getConstantsPath());
+//            FileUtils.forceMkdir(file);
+//            final VelocityContext context = new VelocityContext();
+//            final Root root = new Root();
+//            root.setName(apiInformation.getConstantsClassName());
+//            root.setSerialUID("1L");
+//            context.put("comp", root);
+//            context.put("package", apiInformation.getConstantsPackage());
+//            callVelocity(apiInformation.getConstantsJavaFile(), "tpl/constants.vm", context);
+//        } catch (final IOException e) {
+//            LOGGER.logp(Level.SEVERE, "JMetaAgentsGenerator", "generateConstantsFile", e.getMessage(), e);
+//        }
+//    }
 
     private void generatePojoFromJson(@NonNull final BuildInformation buildInformation) throws IOException {
         if (buildInformation.questionJSON != null || buildInformation.responseJSON != null) {
@@ -168,8 +173,8 @@ public class JMetaAgentsGenerator extends AbstractGenerator {
     }
 
     @NonNull
-    private Map<@NonNull APIInformation, List<BuildInformation>> getSubPackageByDirectoryMap() {
-        final Map<@NonNull APIInformation, List<BuildInformation>> result = new HashMap<>();
+    private Map<@NonNull APIInformation, List<@NonNull BuildInformation>> getSubPackageByDirectoryMap() {
+        final Map<@NonNull APIInformation, List<@NonNull BuildInformation>> result = new HashMap<>();
         final ClassLoader classLoader = JMetaAgentsGenerator.class.getClassLoader();
         final File directory = new File(classLoader.getResource("data/").getFile());
         final Path directoryPath = directory.toPath();
@@ -206,8 +211,7 @@ public class JMetaAgentsGenerator extends AbstractGenerator {
 
                         APIInformation information = mapInformation.get(apiName);
                         if (information == null) {
-                            information = new APIInformation();
-                            information.apiName = apiName;
+                            information = new APIInformation(apiName);
                             mapInformation.put(apiName, information);
                         }
                         List<BuildInformation> list = result.get(information);
@@ -226,45 +230,106 @@ public class JMetaAgentsGenerator extends AbstractGenerator {
         return result;
     }
 
+    /**
+     * All informations of the API.
+     *
+     * @author charlottew
+     */
     public class APIInformation {
+
+        /**
+         * Name of API.
+         */
+        @NonNull
         public String apiName;
-        public List<BuildInformation> listOf;
 
-        public String getConstantsPath() {
-            return JMetaAgentsGenerator.this.destinationPath + "/" + this.apiName + "/constants";
-
+        /**
+         * Constructor.
+         *
+         * @param apiName name of the API.
+         */
+        public APIInformation(@NonNull final String apiName) {
+            this.apiName = apiName;
         }
 
+        /**
+         * Get path of constants.
+         *
+         * @return Constants path.
+         */
+        @NonNull
+        public String getConstantsPath() {
+            return JMetaAgentsGenerator.this.destinationPath + "/" + this.apiName + "/constants";
+        }
+
+        /**
+         * Get java file full name of constants.
+         *
+         * @return java file full name of constants.
+         */
+        @NonNull
         public String getConstantsJavaFile() {
             return getExceptionPath() + "/" + getExceptionClassName() + "Constants.java";
 
         }
 
+        /**
+         * Get java file name of constants.
+         *
+         * @return java file name of constants.
+         */
+        @NonNull
         public String getConstantsClassName() {
             return "J" + this.apiName;
 
         }
 
+        /**
+         * Get package of constants.
+         *
+         * @return package of constants.
+         */
+        @NonNull
         public String getConstantsPackage() {
             return JMetaAgentsGenerator.this.basePackage + "." + this.apiName + ".constants";
-
         }
 
+        /**
+         * Get path of exceptions.
+         *
+         * @return Exceptions path.
+         */
+        @NonNull
         public String getExceptionPath() {
             return JMetaAgentsGenerator.this.destinationPath + "/" + this.apiName + "/exceptions";
-
         }
 
+        /**
+         * Get package of exceptions.
+         *
+         * @return Exceptions package.
+         */
+        @NonNull
         public String getExceptionPackage() {
             return JMetaAgentsGenerator.this.basePackage + "." + this.apiName + ".exceptions";
-
         }
 
+        /**
+         * Get java file full name of exceptions.
+         *
+         * @return java full name of exceptions.
+         */
+        @NonNull
         public String getExceptionJavaFile() {
             return getExceptionPath() + "/" + getExceptionClassName() + "Exception.java";
-
         }
 
+        /**
+         * Get name of exceptions class.
+         *
+         * @return name of exceptions class.
+         */
+        @NonNull
         public String getExceptionClassName() {
             return "J" + this.apiName;
 
@@ -275,27 +340,52 @@ public class JMetaAgentsGenerator extends AbstractGenerator {
          */
         @Override
         public int hashCode() {
-            if (this.apiName != null) {
-                return this.apiName.hashCode();
+            return this.apiName.hashCode();
+        }
+
+        /* (non-Javadoc)
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
+        @Override
+        public boolean equals(final Object obj) {
+            if (obj instanceof APIInformation) {
+                final APIInformation other = (APIInformation) obj;
+                return this.apiName.equals(other.apiName);
+            } else {
+                return false;
             }
-            return super.hashCode();
         }
     }
 
+    /**
+     * Build informations for each query.
+     *
+     * @author charlottew
+     */
     public class BuildInformation {
-        public String packageName;
-        public String subDirectoryPath;
-        public String baseJavaClassName;
-        public File questionJSON;
-        public File responseJSON;
-        public File queryXML;
-
-        /* (non-Javadoc)
-         * @see java.lang.Object#toString()
+        /**
+         * Package name.
          */
-        @Override
-        public String toString() {
-            return "packageName = " + this.packageName + " :: subDirectoryPath = " + this.subDirectoryPath + " :: " + this.baseJavaClassName;
-        }
+        public String packageName;
+        /**
+         * Sub-directory.
+         */
+        public String subDirectoryPath;
+        /**
+         * Base java class name.
+         */
+        public String baseJavaClassName;
+        /**
+         * The related question JSON file.
+         */
+        public File questionJSON;
+        /**
+         * The related response JSON file.
+         */
+        public File responseJSON;
+        /**
+         * The related query XML file.
+         */
+        public File queryXML;
     }
 }

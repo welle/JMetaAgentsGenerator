@@ -18,6 +18,9 @@ import aka.jmetaagentsgenerator.velocity.Root;
 import aka.jmetaagentsgenerator.velocity.RootQuery;
 import aka.jmetaagentsgenerator.xml.query.QueryReaderHelper;
 
+/**
+ * @author charlottew
+ */
 public class JTVDBgenerator extends AbstractGenerator {
 
     private @NonNull final String destinationPath;
@@ -28,6 +31,15 @@ public class JTVDBgenerator extends AbstractGenerator {
     private RootQuery loginQuery;
     private @NonNull final String destinationTestPath;
 
+    /**
+     * Constructor.
+     *
+     * @param destinationPath
+     * @param destinationTestPath
+     * @param basePackage
+     * @param apInformation
+     * @param buildInformationsList
+     */
     public JTVDBgenerator(@NonNull final String destinationPath, @NonNull final String destinationTestPath, @NonNull final String basePackage, @NonNull final APIInformation apInformation, @NonNull final List<BuildInformation> buildInformationsList) {
         super(basePackage);
         this.destinationPath = destinationPath;
@@ -58,6 +70,11 @@ public class JTVDBgenerator extends AbstractGenerator {
         this.queryList.setQueries(queries);
     }
 
+    /**
+     * Build classes.
+     *
+     * @param apiName
+     */
     public void buildMainTVDB(@NonNull final String apiName) {
         try {
             final File file = new File(this.destinationPath + "/" + apiName);
@@ -80,6 +97,11 @@ public class JTVDBgenerator extends AbstractGenerator {
         }
     }
 
+    /**
+     * Build test classes.
+     *
+     * @param apiName
+     */
     public void buildUnitTestTVDB(@NonNull final String apiName) {
         try {
             final File file = new File(this.destinationTestPath + "/" + apiName);

@@ -27,6 +27,9 @@ import aka.jmetaagentsgenerator.velocity.RootQuery;
  */
 public abstract class AbstractGenerator {
 
+    /**
+     * Logger.
+     */
     @NonNull
     public static final Logger LOGGER = Logger.getLogger(AbstractGenerator.class.getName());
 
@@ -36,6 +39,7 @@ public abstract class AbstractGenerator {
     /**
      * Constructor.
      *
+     * @param basePackage root package.
      */
     public AbstractGenerator(@NonNull final String basePackage) {
         this.basePackage = basePackage;
@@ -44,6 +48,13 @@ public abstract class AbstractGenerator {
         this.velocityEngine.init();
     }
 
+    /**
+     * Add JSONQuestion parameter to the root query.
+     *
+     * @param rootQuery
+     * @param buildInformation
+     * @return The root query
+     */
     @NonNull
     public RootQuery addJSONQuestionParam(@NonNull final RootQuery rootQuery, @NonNull final BuildInformation buildInformation) {
         try {
@@ -67,16 +78,40 @@ public abstract class AbstractGenerator {
         return rootQuery;
     }
 
+    /**
+     * Call the Velocity engine with the given parameters.
+     *
+     * @param fileNameFullPath full path to file.
+     * @param templateName template name to use.
+     * @param velocityContext context for the template.
+     */
     public void callVelocity(final String fileNameFullPath, final String templateName, @NonNull final VelocityContext velocityContext) {
+        OutputStream os = null;
+        OutputStreamWriter osw = null;
         try {
-            final OutputStream os = new FileOutputStream(fileNameFullPath);
-            final OutputStreamWriter osw = new OutputStreamWriter(os);
+            os = new FileOutputStream(fileNameFullPath);
+            osw = new OutputStreamWriter(os);
 
             this.velocityEngine.mergeTemplate(templateName, "ISO-8859-1", velocityContext, osw);
             osw.flush();
             osw.close();
+            os.flush();
+            os.close();
         } catch (final IOException e) {
             LOGGER.logp(Level.SEVERE, "JMetaAgentsGenerator", "callVelocity", e.getMessage(), e);
+        } finally {
+            try {
+                if (os != null) {
+                    os.flush();
+                    os.close();
+                }
+                if (osw != null) {
+                    osw.flush();
+                    osw.close();
+                }
+            } catch (final IOException e) {
+                LOGGER.logp(Level.SEVERE, "JMetaAgentsGenerator", "callVelocity", e.getMessage(), e);
+            }
         }
     }
 

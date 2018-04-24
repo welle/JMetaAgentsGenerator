@@ -18,6 +18,9 @@ import aka.jmetaagentsgenerator.velocity.Root;
 import aka.jmetaagentsgenerator.velocity.RootQuery;
 import aka.jmetaagentsgenerator.xml.query.QueryReaderHelper;
 
+/**
+ * @author charlottew
+ */
 public class JOMDBgenerator extends AbstractGenerator {
 
     private @NonNull final String destinationPath;
@@ -27,6 +30,15 @@ public class JOMDBgenerator extends AbstractGenerator {
     private final QueryList queryList;
     private @NonNull final String destinationTestPath;
 
+    /**
+     * Constructor.
+     *
+     * @param destinationPath
+     * @param destinationTestPath
+     * @param basePackage
+     * @param apInformation
+     * @param buildInformationsList
+     */
     public JOMDBgenerator(@NonNull final String destinationPath, @NonNull final String destinationTestPath, @NonNull final String basePackage, @NonNull final APIInformation apInformation, @NonNull final List<BuildInformation> buildInformationsList) {
         super(basePackage);
         this.destinationPath = destinationPath;
@@ -52,6 +64,11 @@ public class JOMDBgenerator extends AbstractGenerator {
         this.queryList.setQueries(queries);
     }
 
+    /**
+     * Build classes.
+     *
+     * @param apiName
+     */
     public void buildMainOMDB(@NonNull final String apiName) {
         try {
             final File file = new File(this.destinationPath + "/" + apiName);
@@ -71,6 +88,11 @@ public class JOMDBgenerator extends AbstractGenerator {
         }
     }
 
+    /**
+     * Build test classes.
+     *
+     * @param apiName
+     */
     public void buildUnitTestOMDB(@NonNull final String apiName) {
         try {
             final File file = new File(this.destinationTestPath + "/" + apiName);
